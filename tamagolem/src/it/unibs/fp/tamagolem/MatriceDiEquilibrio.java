@@ -8,12 +8,15 @@ public class MatriceDiEquilibrio
     final static int RANGE = 7;
     final static int NUM_PROVE_MAX = 10;
     int matrice[][];
+    String[] elementi;
 
 
-    public MatriceDiEquilibrio(int numElementi)
+
+    public MatriceDiEquilibrio(String[] elementi)
     {
 
-        matrice = generaMatrice(numElementi);
+
+        matrice = generaMatrice(elementi.length);
         
 
     }
@@ -97,8 +100,23 @@ public class MatriceDiEquilibrio
         return casuale;
     }
 
+    public int getPotenzaTraDueElementi(String elementoA, String elementoB)
+    {
+        int indixElemA = 0, indixElemB = 0;
+        for ( int i = 0; i<elementi.length; i++)
+        {
+            if (elementi[i].equals(elementoA))
+            {
+                indixElemA = i;
+            }
 
+            if(elementi[i].equals(elementoB))
+            {
+                indixElemB = i;
+            }
+        }
 
-
+        return matrice[indixElemA][indixElemB];
+    }
 
 }
