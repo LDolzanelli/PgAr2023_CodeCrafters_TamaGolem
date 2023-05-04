@@ -1,24 +1,24 @@
 package it.unibs.fp.tamagolem;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class MatriceDiEquilibrio
 {
 
-    final static int RANGE = 7;
+    private int range;
     final static int NUM_PROVE_MAX = 10;
     int matrice[][];
-    String[] elementi;
+    ArrayList<String> elementi;
 
 
 
-    public MatriceDiEquilibrio(String[] elementi)
+    public MatriceDiEquilibrio(ArrayList<String> elementi, int potenzaMassima)
     {
-
-
-        matrice = generaMatrice(elementi.length);
+        this.elementi = elementi;
+        this.range = potenzaMassima;
+        matrice = generaMatrice(elementi.size());
         
-
     }
 
 
@@ -41,11 +41,11 @@ public class MatriceDiEquilibrio
                 if (i != j) {
                     if (j != numElementi - 1) {
                         do {
-                            matrice[i][j] = generaCasualeSenzaZero(RANGE);
+                            matrice[i][j] = generaCasualeSenzaZero(range);
                             somma += matrice[i][j];
                             numProve++;
 
-                            if (Math.abs(somma) > RANGE) {
+                            if (Math.abs(somma) > range) {
                                 somma -= matrice[i][j];
                                 riprova = true;
                             } else {
@@ -79,7 +79,7 @@ public class MatriceDiEquilibrio
             }
 
             if (i >= numElementi - 2
-                    && ((matrice[i][numElementi - 1] == 0 && i != numElementi - 1) || Math.abs(matrice[i][numElementi - 2]) >= RANGE + RANGE / 2)) {
+                    && ((matrice[i][numElementi - 1] == 0 && i != numElementi - 1) || Math.abs(matrice[i][numElementi - 2]) >= range + range / 2)) {
                 i = 0;
             }
         }
@@ -103,14 +103,14 @@ public class MatriceDiEquilibrio
     public int getPotenzaTraDueElementi(String elementoA, String elementoB)
     {
         int indixElemA = 0, indixElemB = 0;
-        for ( int i = 0; i<elementi.length; i++)
+        for ( int i = 0; i<elementi.size(); i++)
         {
-            if (elementi[i].equals(elementoA))
+            if (elementi.get(i).equals(elementoA))
             {
                 indixElemA = i;
             }
 
-            if(elementi[i].equals(elementoB))
+            if(elementi.get(i).equals(elementoB))
             {
                 indixElemB = i;
             }
