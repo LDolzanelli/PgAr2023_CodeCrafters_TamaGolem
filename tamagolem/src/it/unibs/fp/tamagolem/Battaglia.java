@@ -41,10 +41,13 @@ public class Battaglia {
         Scanner scanner = new Scanner(System.in);
 
         // LOTTA
+
         Tamagolem tamagolemA = evocaTamagolem(allenatoreA, numPietre);
         Tamagolem tamagolemB = evocaTamagolem(allenatoreB, numPietre);
 
-        while (allenatoreA.getNumTamagolem() >= 0 && allenatoreB.getNumTamagolem() >= 0) {
+        while ((allenatoreA.getNumTamagolem() > 0 && allenatoreB.getNumTamagolem() > 0)
+                || (allenatoreA.getNumTamagolem() == 0 && allenatoreA.getNumTamagolem() == 0
+                        && tamagolemA.getVitaAttuale() > 0 && tamagolemB.getVitaAttuale() > 0)) {
 
             if (tamagolemA.getVitaAttuale() <= 0) {
                 tamagolemA = evocaTamagolem(allenatoreA, numPietre);
@@ -52,18 +55,6 @@ public class Battaglia {
 
             if (tamagolemB.getVitaAttuale() <= 0) {
                 tamagolemB = evocaTamagolem(allenatoreB, numPietre);
-            }
-
-            if (tamagolemA.getVitaAttuale() > 0) {
-                mostraVitaA = String.valueOf(tamagolemA.getVitaAttuale());
-            } else {
-                mostraVitaA = "Morto";
-            }
-
-            if (tamagolemB.getVitaAttuale() > 0) {
-                mostraVitaB = String.valueOf(tamagolemB.getVitaAttuale());
-            } else {
-                mostraVitaB = "Morto";
             }
 
             while (tamagolemA.getVitaAttuale() > 0 && tamagolemB.getVitaAttuale() > 0) {
@@ -82,6 +73,18 @@ public class Battaglia {
                 } else {
                     statoPietraB = "Stessa Pietra";
                     statoPietraA = "Stessa Pietra";
+                }
+
+                if (tamagolemA.getVitaAttuale() > 0) {
+                    mostraVitaA = String.valueOf(tamagolemA.getVitaAttuale());
+                } else {
+                    mostraVitaA = "Morto";
+                }
+
+                if (tamagolemB.getVitaAttuale() > 0) {
+                    mostraVitaB = String.valueOf(tamagolemB.getVitaAttuale());
+                } else {
+                    mostraVitaB = "Morto";
                 }
 
                 do {
@@ -120,12 +123,14 @@ public class Battaglia {
             }
         }
 
-        if (allenatoreA.getNumTamagolem() < 0) {
+        if (allenatoreA.getNumTamagolem() <= 0 && tamagolemB.getVitaAttuale() > 0) {
             System.out.println(TamagolemMain.FLUSH);
-            System.out.println(PrettyStrings.frame("HA VINTO L'" + allenatoreB.getNome(), 80, true, false));
-        } else if (allenatoreB.getNumTamagolem() < 0) {
+            System.out
+                    .println(PrettyStrings.frame("HA VINTO L'" + allenatoreB.getNome().toUpperCase(), 80, true, false));
+        } else if (allenatoreB.getNumTamagolem() <= 0 && tamagolemA.getVitaAttuale() > 0) {
             System.out.println(TamagolemMain.FLUSH);
-            System.out.println(PrettyStrings.frame("HA VINTO L'" + allenatoreA.getNome(), 80, true, false));
+            System.out
+                    .println(PrettyStrings.frame("HA VINTO L'" + allenatoreA.getNome().toUpperCase(), 80, true, false));
         }
 
     }
