@@ -51,16 +51,4 @@ public class MenuTamagolem {
         return numeroElementi;
     }
 
-    /*
-            if (difficoltaSelezionata == 1) {
-            return (random.nextInt(3) + 3);
-        }
-        else if(difficoltaSelezionata == 2) {
-            return (random.nextInt(3) + 6);
-        }
-        else {
-            return (random.nextInt(2) + 9);
-        }
-
-     */
 }
