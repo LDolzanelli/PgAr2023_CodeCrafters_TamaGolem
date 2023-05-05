@@ -13,16 +13,25 @@ public class Battaglia {
     private final ArrayList<String> elementiADisposizione = new ArrayList<>();
 
     public Battaglia(int numElementi) {
+        //A seconda della difficoltà scelta, vengono selezionati gli elementi da usare nella battaglia
         for(int i = 0; i < numElementi; i++) {
             elementiADisposizione.add(TamagolemMain.NOME_ELEMENTI[i]);
         }
+        //Viene generata la matrice che mette in equilibrio gli elementi selezionati
         MatriceDiEquilibrio matriceDiEquilibrio = new MatriceDiEquilibrio(elementiADisposizione, numElementi);
+
+        //Genera il numero di pietre che i Tamagolem possono tenere
         int numPietre = generaNumPietre(numElementi);
 
+        //Creazione allenatori
         Allenatore allenatoreA = new Allenatore(numElementi, numPietre, "Allenatore Ash");
         Allenatore allenatoreB = new Allenatore(numElementi, numPietre, "Allenatore Gary");
 
+        //Generazione della scorta di pietre comune tramite HashMap
         aggiuntaPietreScorta(elementiADisposizione, allenatoreA.getNumTamagolem(), numPietre);
+
+        //Evocazione di Tamagolem finchè gli allenatori non ne finiscono
+        //sarà da cambiare una volta che gestiamo la lotta vera e propria
         while(allenatoreA.getTamagolemADisposizione().size() > 0 && allenatoreB.getTamagolemADisposizione().size() > 0) {
             Tamagolem tamagolemA = evocaTamagolem(allenatoreA);
             Tamagolem tamagolemB = evocaTamagolem(allenatoreB);
@@ -35,8 +44,10 @@ public class Battaglia {
     }
 
     private void aggiuntaPietreScorta(ArrayList<String> listaElementi, int numGolem, int numPietre) {
+        //Algoritmo che calcola quante pietre ci sono nella scorta comune a seconda del numero di elementi (e di conseguenza pietre, golem..)
         int numPietrePerElemento = ((2 * numGolem * numPietre) / listaElementi.size());
         for (String s : listaElementi) {
+            //Le pietre vengono messe nell'hashmap insieme al numero iniziale
             scortaComunePietre.put(s, numPietrePerElemento);
         }
 
@@ -44,7 +55,7 @@ public class Battaglia {
 
 
     private Map<Integer, String> generaIndiceScorta() {
-        //Mappa temporanea che assegna ad ogni elemento un indice, torna utile nella selezione
+        //Mappa temporanea che assegna ad ogni elemento un indice, torna utile nella selezione della pietra desiderata
         Map<Integer, String> indicePietre = new HashMap<>();
         int counter = 1;
         for (String str : scortaComunePietre.keySet()) {
@@ -60,10 +71,12 @@ public class Battaglia {
                 ": Seleziona le pietre per il tuo Tamagolem!", 100, true, false);
         System.out.println(nomeAllenatore);
         System.out.println(PrettyStrings.center("Scorta di pietre rimanenti: ", 30));
+
+        //Loop dell'hashmap temporaneo per visualizzare un menu con indice, nome elemento e numero di pietre che rimangono
         for (Integer indice : indicePietre.keySet()) {
-            String elemento = indicePietre.get(indice);
-            Integer numPietre = scortaComunePietre.get(elemento);
-            System.out.println(indice + "- " + "Elemento: " + elemento + "   Pietre: " + numPietre);
+            String nomeElemento = indicePietre.get(indice);
+            Integer numPietre = scortaComunePietre.get(nomeElemento);
+            System.out.println(indice + "- " + "Elemento: " + nomeElemento + "   Pietre: " + numPietre);
         }
     }
 
@@ -88,15 +101,17 @@ public class Battaglia {
 
 
     private Tamagolem evocaTamagolem(Allenatore allenatore) {
+        //Viene pescato il primo Tamagolem già creato con la creazione dell'allenatore
         Tamagolem tamagolem = allenatore.getTamagolemADisposizione().get(0);
+
         Map<Integer, String> indicePietre = generaIndiceScorta();
 
+        //Vengono aggiunte pietre finchè il tamagolem non raggiunge il limite generato
         while(tamagolem.getPietreSelezionate().size() < tamagolem.getNumPietre()) {
             System.out.println("Selezione pietra numero " );
             String pietraSelezionata = sceltaPietra(indicePietre, allenatore);
             tamagolem.getPietreSelezionate().add(pietraSelezionata);
         }
-        tamagolem.aggiungiPietre("Prova");
         return tamagolem;
     }
 

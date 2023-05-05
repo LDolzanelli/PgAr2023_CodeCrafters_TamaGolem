@@ -21,11 +21,8 @@ public class Tamagolem {
         return numPietre;
     }
 
-    public void aggiungiPietre(String nomePietraSelezionata) {
-        pietreSelezionate.add(nomePietraSelezionata);
-    }
-
     public String getPietra() {
+
         if(counter > numPietre - 1) {
             counter = 0;  
         }
