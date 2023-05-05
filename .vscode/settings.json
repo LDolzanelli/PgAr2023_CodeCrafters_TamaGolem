@@ -1,6 +1,14 @@
 {
+<<<<<<< HEAD
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
         "c:\\Users\\loren\\Downloads\\kibofplib-1.0.jar"
     ]
 }
+=======
+  "java.project.referencedLibraries": [
+    "lib/**/*.jar",
+    "c:\\Users\\abdel\\OneDrive\\Desktop\\uni\\Fondamenti_di_informatica\\FD2223\\kibofplib.jar"
+  ]
+}
+>>>>>>> origin/main
