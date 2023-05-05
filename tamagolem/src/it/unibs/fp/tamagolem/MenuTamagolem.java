@@ -17,43 +17,33 @@ public class MenuTamagolem {
         System.out.println(PrettyStrings.frame(BENVENUTO, 30, true, false));
         Menu menuPrincipale = new Menu(SCELTA_DIFFICOLTA, VOCI_MENU_PRINCIPALE, false, true, true);
         int scelta = menuPrincipale.choose();
-        int numeroElementi = generaNumeroElementi(scelta);
+        int numElementi = generaNumeroElementi(scelta);
 
-        switch(scelta){
-            case 0:
-                break;
+        Battaglia nuovaBattaglia = new Battaglia(numElementi);
 
-            case 1:
-                System.out.println(numeroElementi);
-                break;
 
-            case 2:
-                System.out.println(numeroElementi);
-                break;
-
-            case 3:
-                System.out.println(numeroElementi);
-                break;
-
-        }
     }
 
     public static int generaNumeroElementi(int difficoltaSelezionata) {
         Random random = new Random();
         int numeroElementi = 0;
+        //L'elemento in input è un numero tra 0 e 3, forzato dalla scelta del menu
         switch (difficoltaSelezionata) {
             case 0:
                 break;
 
             case 1:
-                numeroElementi = random.nextInt(3) + 3;
+                //Difficoltà facile = da 4 a 5 elementi
+                numeroElementi = random.nextInt(2) + 4;
                 break;
 
             case 2:
+                //Difficoltà media = da 6 a 8 elementi
                 numeroElementi = random.nextInt(3) + 6;
                 break;
 
             case 3:
+                //Difficoltà difficile = da 9 a 10 elementi
                 numeroElementi = random.nextInt(2) + 9;
                 break;
         }
