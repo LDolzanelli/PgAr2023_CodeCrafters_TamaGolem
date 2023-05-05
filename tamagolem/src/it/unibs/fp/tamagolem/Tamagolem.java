@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 public class Tamagolem {
 
-    public static final int VITA = 8;
+    public static final int VITA_INIZIALE = 8;
+    private int vitaAttuale = VITA_INIZIALE;
     private final int numPietre;
     private final ArrayList<String> pietreSelezionate = new ArrayList<>();
     private int counter = 0;
@@ -23,14 +24,30 @@ public class Tamagolem {
 
     public String getPietra() {
 
-        if(counter > numPietre - 1) {
-            counter = 0;  
-        }
-        counter++;
+        return pietreSelezionate.get(counter);
 
-        return pietreSelezionate.get(counter - 1);
-        
     }
-    
+
+    public void pietraSuccessiva() {
+
+        if (counter == pietreSelezionate.size() - 1) {
+            counter = 0;
+        }else
+        {
+            counter++;
+        }
+
+       
+    }
+
+    public int getVitaAttuale() {
+        return vitaAttuale;
+    }
+
+    public void subireDanno(int danno) {
+
+        vitaAttuale -= danno;
+
+    }
 
 }

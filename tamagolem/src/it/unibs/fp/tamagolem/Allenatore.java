@@ -3,18 +3,18 @@ package it.unibs.fp.tamagolem;
 import java.util.ArrayList;
 
 public class Allenatore {
-    private final ArrayList<Tamagolem> tamagolemADisposizione = new ArrayList<Tamagolem>();
-    private final int numTamagolem;
-    private final String nome;
+    private Tamagolem tamagolemADisposizione;
+    private int numTamagolem;
+    private String nome;
 
     public Allenatore(int numElementi, int numPietre, String nome) {
         this.numTamagolem = generaNumTamagolem(numElementi, numPietre);
-        aggiungiTamagolem(numTamagolem, numPietre);
         this.nome = nome;
     }
 
-    public ArrayList<Tamagolem> getTamagolemADisposizione() {
-        return tamagolemADisposizione;
+    public void setTamagolemADisposizione(Tamagolem tamagolem) {
+        tamagolemADisposizione = tamagolem;
+        numTamagolem --;
     }
 
     public int getNumTamagolem() {
@@ -29,9 +29,4 @@ public class Allenatore {
         return (((numElementi - 1) * (numElementi - 2)) / (2 * numPietre));
     }
 
-    private void aggiungiTamagolem(int numTamagolem, int numPietre) {
-        for(int i = 0; i < numTamagolem; i++) {
-            tamagolemADisposizione.add(new Tamagolem(numPietre));
-        }
-    }
 }

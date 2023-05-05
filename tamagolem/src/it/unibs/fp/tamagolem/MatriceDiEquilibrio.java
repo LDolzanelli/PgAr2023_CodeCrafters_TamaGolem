@@ -40,6 +40,7 @@ public class MatriceDiEquilibrio
 
                 if (i != j) {
                     if (j != numElementi - 1) {
+
                         do {
                             matrice[i][j] = generaCasualeSenzaZero(range);
                             somma += matrice[i][j];
@@ -78,8 +79,7 @@ public class MatriceDiEquilibrio
 
             }
 
-            if (i >= numElementi - 2
-                    && ((matrice[i][numElementi - 1] == 0 && i != numElementi - 1) || Math.abs(matrice[i][numElementi - 2]) >= range + range / 2)) {
+            if (i >= numElementi - 2 && ((matrice[i][numElementi - 1] == 0 && i != numElementi - 1) || Math.abs(matrice[i][numElementi - 2]) >= range + range / 2)) {
                 i = 0;
             }
         }
