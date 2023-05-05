@@ -36,6 +36,8 @@ public class Battaglia {
         int turno = 0;
         String statoPietraA = null;
         String statoPietraB = null;
+        String mostraVitaA = null;
+        String mostraVitaB = null;
         Scanner scanner = new Scanner(System.in);
 
         // LOTTA
@@ -52,7 +54,20 @@ public class Battaglia {
                 tamagolemB = evocaTamagolem(allenatoreB, numPietre);
             }
 
+            if (tamagolemA.getVitaAttuale() > 0) {
+                mostraVitaA = String.valueOf(tamagolemA.getVitaAttuale());
+            } else {
+                mostraVitaA = "Morto";
+            }
+
+            if (tamagolemB.getVitaAttuale() > 0) {
+                mostraVitaB = String.valueOf(tamagolemB.getVitaAttuale());
+            } else {
+                mostraVitaB = "Morto";
+            }
+
             while (tamagolemA.getVitaAttuale() > 0 && tamagolemB.getVitaAttuale() > 0) {
+
                 danno = matriceDiEquilibrio.getPotenzaTraDueElementi(tamagolemA.getPietra(), tamagolemB.getPietra());
 
                 if (danno > 0) {
@@ -89,9 +104,9 @@ public class Battaglia {
 
                     System.out.println("VITA TAMAGOLEM");
                     System.out.println(
-                            "Vita Tamagolem dell'" + " " + allenatoreA.getNome() + ": " + tamagolemA.getVitaAttuale());
+                            "Vita Tamagolem dell'" + " " + allenatoreA.getNome() + ": " + mostraVitaA);
                     System.out.println(
-                            "Vita Tamagolem dell'" + " " + allenatoreB.getNome() + ": " + tamagolemB.getVitaAttuale());
+                            "Vita Tamagolem dell'" + " " + allenatoreB.getNome() + ": " + mostraVitaB);
 
                     System.out.println("\nPremi invio per continuare");
 
@@ -105,15 +120,12 @@ public class Battaglia {
             }
         }
 
-        if (allenatoreA.getNumTamagolem() <= 0 && allenatoreB.getNumTamagolem() > 0) {
+        if (allenatoreA.getNumTamagolem() < 0) {
             System.out.println(TamagolemMain.FLUSH);
             System.out.println(PrettyStrings.frame("HA VINTO L'" + allenatoreB.getNome(), 80, true, false));
-        } else if (allenatoreB.getNumTamagolem() <= 0 && allenatoreA.getNumTamagolem() > 0) {
+        } else if (allenatoreB.getNumTamagolem() < 0) {
             System.out.println(TamagolemMain.FLUSH);
             System.out.println(PrettyStrings.frame("HA VINTO L'" + allenatoreA.getNome(), 80, true, false));
-        } else {
-            System.out.println(TamagolemMain.FLUSH);
-            System.out.println(PrettyStrings.frame("PAREGGIO", 80, true, false));
         }
 
     }
