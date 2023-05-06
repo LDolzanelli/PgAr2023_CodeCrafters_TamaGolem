@@ -62,8 +62,8 @@ public class Battaglia {
         Tamagolem tamagolemB = evocaTamagolem(allenatoreB, numPietre);
 
         while ((allenatoreA.getNumTamagolem() > 0 && allenatoreB.getNumTamagolem() > 0)
-                || (allenatoreA.getNumTamagolem() == 0 && allenatoreA.getNumTamagolem() == 0
-                        && tamagolemA.getVitaAttuale() > 0 && tamagolemB.getVitaAttuale() > 0)) {
+                || (allenatoreA.getNumTamagolem() == 0 && tamagolemA.getVitaAttuale() > 0) 
+                || (allenatoreB.getNumTamagolem() == 0 && tamagolemB.getVitaAttuale() > 0)) {
 
             if (tamagolemA.getVitaAttuale() <= 0) {
                 tamagolemA = evocaTamagolem(allenatoreA, numPietre);
