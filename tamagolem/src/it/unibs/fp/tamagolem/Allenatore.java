@@ -1,11 +1,9 @@
 package it.unibs.fp.tamagolem;
 
-import java.util.ArrayList;
-
 public class Allenatore {
     private Tamagolem tamagolemADisposizione;
     private int numTamagolem;
-    private String nome;
+    private final String nome;
 
     public Allenatore(int numElementi, int numPietre, String nome) {
         this.numTamagolem = generaNumTamagolem(numElementi, numPietre);

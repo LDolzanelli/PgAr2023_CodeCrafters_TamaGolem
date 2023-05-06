@@ -10,6 +10,22 @@ import java.util.Scanner;
 
 public class Battaglia {
 
+    public static final String VINTO = "HA VINTO L'";
+    public static final String VITA_TAMAGOLEM_DELL = "Vita Tamagolem dell' ";
+    public static final String PIETRA_FORTE = "Pietra Forte";
+    public static final String PIETRA_DEBOLE = "Pietra Debole";
+    public static final String STESSA_PIETRA = "Stessa Pietra";
+    public static final String MORTO = "Morto";
+    public static final String TAMAGOLEM_A_DISPOSIZIONE = "TAMAGOLEM A DISPOSIZIONE";
+    public static final String PIETRE = "PIETRE";
+    public static final String VITA_TAMAGOLEM = "VITA TAMAGOLEM";
+    public static final String INVIO_PER_CONTINUARE = "\nPremi invio per continuare";
+    public static final String DUE_PUNTI = "Danno: ";
+    public static final String PIETRE_RIMANENTI = "Scorta di pietre rimanenti: ";
+    public static final String SELEZIONE_PIETRA = "Selezione pietra numero ";
+    public static final String SELEZIONA_LE_PIETRE = ": Seleziona le pietre per il tuo Tamagolem!";
+    public static final String PIETRA_DESIDERATA = "Selezionare la pietra desiderata: ";
+    public static final String PIETRA_ESAURITA = "Pietra esaurita, selezionarne un'altra";
     private Map<String, Integer> scortaComunePietre = new HashMap<>();
     private ArrayList<String> elementiADisposizione = new ArrayList<>();
 
@@ -63,28 +79,28 @@ public class Battaglia {
 
                 if (danno > 0) {
                     tamagolemB.subireDanno(danno);
-                    statoPietraA = "Pietra Forte";
-                    statoPietraB = "Pietra Debole";
+                    statoPietraA = PIETRA_FORTE;
+                    statoPietraB = PIETRA_DEBOLE;
 
                 } else if (danno < 0) {
                     tamagolemA.subireDanno(Math.abs(danno));
-                    statoPietraB = "Pietra Forte";
-                    statoPietraA = "Pietra Debole";
+                    statoPietraB = PIETRA_FORTE;
+                    statoPietraA = PIETRA_DEBOLE;
                 } else {
-                    statoPietraB = "Stessa Pietra";
-                    statoPietraA = "Stessa Pietra";
+                    statoPietraB = STESSA_PIETRA;
+                    statoPietraA = STESSA_PIETRA;
                 }
 
                 if (tamagolemA.getVitaAttuale() > 0) {
                     mostraVitaA = String.valueOf(tamagolemA.getVitaAttuale());
                 } else {
-                    mostraVitaA = "Morto";
+                    mostraVitaA = MORTO;
                 }
 
                 if (tamagolemB.getVitaAttuale() > 0) {
                     mostraVitaB = String.valueOf(tamagolemB.getVitaAttuale());
                 } else {
-                    mostraVitaB = "Morto";
+                    mostraVitaB = MORTO;
                 }
 
                 do {
@@ -92,26 +108,24 @@ public class Battaglia {
                     System.out.println(TamagolemMain.FLUSH);
 
                     System.out.println(PrettyStrings.frame(String.format("TURNO %d", turno), 11, true, true));
-                    System.out.println("TAMAGOLEM A DISPOSIZIONE");
+                    System.out.println(TAMAGOLEM_A_DISPOSIZIONE);
                     System.out.println(allenatoreA.getNome() + ": " + allenatoreA.getNumTamagolem());
                     System.out.println(allenatoreB.getNome() + ": " + allenatoreB.getNumTamagolem());
                     System.out.println();
 
-                    System.out.println("PIETRE");
+                    System.out.println(PIETRE);
 
                     System.out.println(allenatoreA.getNome() + ": " + tamagolemA.getPietra() + " -> " + statoPietraA);
                     System.out.println(allenatoreB.getNome() + ": " + tamagolemB.getPietra() + " -> " + statoPietraB);
 
-                    System.out.println("Danno: " + Math.abs(danno));
+                    System.out.println(DUE_PUNTI + Math.abs(danno));
                     System.out.println();
 
-                    System.out.println("VITA TAMAGOLEM");
-                    System.out.println(
-                            "Vita Tamagolem dell'" + " " + allenatoreA.getNome() + ": " + mostraVitaA);
-                    System.out.println(
-                            "Vita Tamagolem dell'" + " " + allenatoreB.getNome() + ": " + mostraVitaB);
+                    System.out.println(VITA_TAMAGOLEM);
+                    System.out.println(VITA_TAMAGOLEM_DELL + allenatoreA.getNome() + ": " + mostraVitaA);
+                    System.out.println(VITA_TAMAGOLEM_DELL + allenatoreB.getNome() + ": " + mostraVitaB);
 
-                    System.out.println("\nPremi invio per continuare");
+                    System.out.println(INVIO_PER_CONTINUARE);
 
                 } while (!scanner.nextLine().isEmpty());
 
@@ -126,11 +140,10 @@ public class Battaglia {
         if (allenatoreA.getNumTamagolem() <= 0 && tamagolemB.getVitaAttuale() > 0) {
             System.out.println(TamagolemMain.FLUSH);
             System.out
-                    .println(PrettyStrings.frame("HA VINTO L'" + allenatoreB.getNome().toUpperCase(), 80, true, false));
+                    .println(PrettyStrings.frame(VINTO + allenatoreB.getNome().toUpperCase(), 80, true, false));
         } else if (allenatoreB.getNumTamagolem() <= 0 && tamagolemA.getVitaAttuale() > 0) {
             System.out.println(TamagolemMain.FLUSH);
-            System.out
-                    .println(PrettyStrings.frame("HA VINTO L'" + allenatoreA.getNome().toUpperCase(), 80, true, false));
+            System.out.println(PrettyStrings.frame(VINTO + allenatoreA.getNome().toUpperCase(), 80, true, false));
         }
 
     }
@@ -143,8 +156,7 @@ public class Battaglia {
 
         // Vengono aggiunte pietre finchè il tamagolem non raggiunge il limite generato
         while (tamagolem.getPietreSelezionate().size() < tamagolem.getNumPietre()) {
-            System.out.println("Selezione pietra numero ");
-            String pietraSelezionata = sceltaPietra(indicePietre, allenatore);
+            String pietraSelezionata = sceltaPietra(indicePietre, allenatore, tamagolem);
             tamagolem.getPietreSelezionate().add(pietraSelezionata);
         }
 
@@ -180,14 +192,15 @@ public class Battaglia {
         return indicePietre;
     }
 
-    private void visualizzaScortaComune(Map<Integer, String> indicePietre, Allenatore allenatore) {
+    private void visualizzaScortaComune(Map<Integer, String> indicePietre, Allenatore allenatore, Tamagolem tamagolem) {
         // Visualizza la scorta con l'indice assegnato all'elemento e la quantità di
         // pietre rimanenti
         System.out.println(TamagolemMain.FLUSH);
         String nomeAllenatore = PrettyStrings.frame(allenatore.getNome() +
-                ": Seleziona le pietre per il tuo Tamagolem!", 100, true, false);
+                SELEZIONA_LE_PIETRE, 100, true, false);
         System.out.println(nomeAllenatore);
-        System.out.println(PrettyStrings.center("Scorta di pietre rimanenti: ", 30));
+        System.out.println(SELEZIONE_PIETRA + (tamagolem.getPietreSelezionate().size() + 1));
+        System.out.println(PIETRE_RIMANENTI);
 
         // Loop dell'hashmap temporaneo per visualizzare un menu con indice, nome
         // elemento e numero di pietre che rimangono
@@ -198,15 +211,15 @@ public class Battaglia {
         }
     }
 
-    private String sceltaPietra(Map<Integer, String> indicePietre, Allenatore allenatore) {
-        visualizzaScortaComune(indicePietre, allenatore);
+    private String sceltaPietra(Map<Integer, String> indicePietre, Allenatore allenatore, Tamagolem tamagolem) {
+        visualizzaScortaComune(indicePietre, allenatore, tamagolem);
         String pietraSelezionata;
         do {
-            int scelta = InputData.readIntegerBetween("Selezionare la pietra desiderata: ", 1, indicePietre.size());
+            int scelta = InputData.readIntegerBetween(PIETRA_DESIDERATA, 1, indicePietre.size());
             pietraSelezionata = indicePietre.get(scelta);
             // Error check nel caso si provi a selezionare una pietra esaurita
             if (scortaComunePietre.get(pietraSelezionata) < 1) {
-                System.out.println("Pietra esaurita, selezionarne un'altra");
+                System.out.println(PIETRA_ESAURITA);
             }
         } while (scortaComunePietre.get(pietraSelezionata) < 1);
 
