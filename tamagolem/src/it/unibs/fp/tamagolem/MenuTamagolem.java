@@ -5,13 +5,9 @@ import it.kibo.fp.lib.PrettyStrings;
 
 import java.util.Random;
 
+import static it.unibs.fp.tamagolem.TextConstants.*;
+
 public class MenuTamagolem {
-
-
-    private static final String BENVENUTO = "BENVENUTO IN TAMAGOLEM!";
-    private static final String SCELTA_DIFFICOLTA = "Scegli la difficoltà";
-    private static final String[] VOCI_MENU_PRINCIPALE = {"Facile", "Medio", "Difficile"};
-
 
     public static void menuPrincipale() {
         System.out.println(PrettyStrings.frame(BENVENUTO, 30, true, false));

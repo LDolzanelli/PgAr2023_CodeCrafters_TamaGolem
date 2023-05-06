@@ -8,24 +8,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+import static it.unibs.fp.tamagolem.TextConstants.*;
+
 public class Battaglia {
 
-    public static final String VINTO = "HA VINTO L'";
-    public static final String VITA_TAMAGOLEM_DELL = "Vita Tamagolem dell' ";
-    public static final String PIETRA_FORTE = "Pietra Forte";
-    public static final String PIETRA_DEBOLE = "Pietra Debole";
-    public static final String STESSA_PIETRA = "Stessa Pietra";
-    public static final String MORTO = "Morto";
-    public static final String TAMAGOLEM_A_DISPOSIZIONE = "TAMAGOLEM A DISPOSIZIONE";
-    public static final String PIETRE = "PIETRE";
-    public static final String VITA_TAMAGOLEM = "VITA TAMAGOLEM";
-    public static final String INVIO_PER_CONTINUARE = "\nPremi invio per continuare";
-    public static final String DUE_PUNTI = "Danno: ";
-    public static final String PIETRE_RIMANENTI = "Scorta di pietre rimanenti: ";
-    public static final String SELEZIONE_PIETRA = "Selezione pietra numero ";
-    public static final String SELEZIONA_LE_PIETRE = ": Seleziona le pietre per il tuo Tamagolem!";
-    public static final String PIETRA_DESIDERATA = "Selezionare la pietra desiderata: ";
-    public static final String PIETRA_ESAURITA = "Pietra esaurita, selezionarne un'altra";
     private Map<String, Integer> scortaComunePietre = new HashMap<>();
     private ArrayList<String> elementiADisposizione = new ArrayList<>();
 
@@ -118,7 +104,7 @@ public class Battaglia {
                     System.out.println(allenatoreA.getNome() + ": " + tamagolemA.getPietra() + " -> " + statoPietraA);
                     System.out.println(allenatoreB.getNome() + ": " + tamagolemB.getPietra() + " -> " + statoPietraB);
 
-                    System.out.println(DUE_PUNTI + Math.abs(danno));
+                    System.out.println(DANNO + Math.abs(danno));
                     System.out.println();
 
                     System.out.println(VITA_TAMAGOLEM);
