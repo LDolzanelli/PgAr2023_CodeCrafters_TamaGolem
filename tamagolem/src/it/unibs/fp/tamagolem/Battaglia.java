@@ -35,7 +35,7 @@ public class Battaglia {
         aggiuntaPietreScorta(allenatoreA.getNumTamagolem(), numPietre);
 
         int danno;
-        int turno = 0;
+        int turno = 1;
         String statoPietraA = null;
         String statoPietraB = null;
         String mostraVitaA = null;
@@ -49,7 +49,7 @@ public class Battaglia {
 
         do {
             tamagolemB = evocaTamagolem(allenatoreB, numPietre);
-        } while(checkStessePietre(tamagolemA, tamagolemB, numPietre));
+        } while(checkStessePietre(tamagolemB, tamagolemA, numPietre));
 
         while ((allenatoreA.getNumTamagolem() > 0 && allenatoreB.getNumTamagolem() > 0)
                 || (allenatoreA.getNumTamagolem() == 0 && tamagolemA.getVitaAttuale() > 0 && !(allenatoreB.getNumTamagolem() == 0 && tamagolemB.getVitaAttuale() <= 0))
@@ -64,7 +64,7 @@ public class Battaglia {
             if (tamagolemB.getVitaAttuale() <= 0) {
                 do {
                     tamagolemB = evocaTamagolem(allenatoreB, numPietre);
-                } while(checkStessePietre(tamagolemA, tamagolemB, numPietre));
+                } while(checkStessePietre(tamagolemB, tamagolemA, numPietre));
             }
 
             while (tamagolemA.getVitaAttuale() > 0 && tamagolemB.getVitaAttuale() > 0) {
@@ -142,19 +142,43 @@ public class Battaglia {
 
     }
 
-    private boolean checkStessePietre(Tamagolem tamagolemA, Tamagolem tamagolemB, int numPietre) {
-        for(int i = 0; i < numPietre; i++) {
-            if(!tamagolemA.getPietreSelezionate().get(i).equals(tamagolemB.getPietreSelezionate().get(i))) {
+    /**
+     * controllo per evitare di entrare in un loop infinito durante la battaglia, nel quale gli elementi
+     * possono coincidere all'infinito se selezionati nello stesso ordine
+     * @param tamagolemDaEvocare
+     * @param tamagolemEvocato
+     * @param numPietre
+     * @return
+     */
+    private boolean checkStessePietre(Tamagolem tamagolemDaEvocare, Tamagolem tamagolemEvocato, int numPietre) {
+        int i;
+        //Viene creato un secondo indice per il tamagolem già evocato, per tener conto della pietra che lancerà
+        //all'inizio del turno
+        int indiceTamagolemEvocato = tamagolemEvocato.getPietraDaLanciare();
+
+        for(i = 0; i < numPietre; i++) {
+            //Se l'indice del tamagolem evocato va in overflow, viene resettato a 0
+            if(indiceTamagolemEvocato > numPietre - 1) {
+                indiceTamagolemEvocato = 0;
+            }
+            //Vengono paragonate tutte le pietre in ordine, alla prima eccezione il gioco può continuare
+            if(!tamagolemDaEvocare.getPietreSelezionate().get(i).equals
+                    (tamagolemEvocato.getPietreSelezionate().get(indiceTamagolemEvocato))) {
                 return false;
             }
+            indiceTamagolemEvocato++;
         }
-        reinserimentoPietreScortaComune(tamagolemA);
+        //Vengono rimesse nella scorta le pietre selezionate ma non utilizzate
+        reinserimentoPietreScortaComune(tamagolemDaEvocare);
+        System.out.println();
         System.out.println(ATTENZIONE_PAREGGIO);
         System.out.println(INSERIRE_NUOVAMENTE_PIETRE);
         return true;
     }
 
     private void reinserimentoPietreScortaComune(Tamagolem tamagolem) {
+        //Si accede al valore della hashmap grazie all'arraylist di pietre appena selezionate. viene ristabilito
+        //il valore iniziale
         for(String s : tamagolem.getPietreSelezionate()) {
             int numPietreRimaste = (scortaComunePietre.get(s) + 1);
             scortaComunePietre.put(s, numPietreRimaste);
@@ -162,7 +186,6 @@ public class Battaglia {
     }
 
     private Tamagolem evocaTamagolem(Allenatore allenatore, int numPietre) {
-        // Viene pescato il primo Tamagolem già creato con la creazione dell'allenatore
         Tamagolem tamagolem = new Tamagolem(numPietre);
 
         Map<Integer, String> indicePietre = generaIndiceScorta();
@@ -183,8 +206,8 @@ public class Battaglia {
     private void aggiuntaPietreScorta(int numGolem, int numPietre) {
         // Algoritmo che calcola quante pietre ci sono nella scorta comune a seconda del
         // numero di elementi (e di conseguenza pietre, golem..)
-        // NB: Abbiamo cambiato la formula perchè in certi casi (ad esempio numElementi = 5)
-        // la scorta comune non bastava per i tamagolem di ogni allenatore
+        // la formula è leggermente diversa perchè in certi casi la scorta comune non bastava
+        // per i tamagolem di ogni allenatore
         int numPietrePerElemento = ((3 * numGolem * numPietre) / elementiADisposizione.size());
         for (String s : elementiADisposizione) {
             // Le pietre vengono messe nell'hashmap insieme al numero iniziale
@@ -244,9 +267,11 @@ public class Battaglia {
     }
 
     public void visualizzaEquilibrio() {
+        //viene caricata la matrice
         int[][] matrice = matriceDiEquilibrio.getMatrice();
         String messaggioEquilibrio = PrettyStrings.frame(MESSAGGIO_EQUILIBRIO, 80, true, true);
         System.out.println(messaggioEquilibrio);
+        //stampa l'indice delle colonne
         for(int i = 0; i < elementiADisposizione.size(); i++) {
             if(i == 0) {
                 System.out.print(String.format(FORMAT_EQUILIBRIO, " "));
@@ -256,9 +281,11 @@ public class Battaglia {
         System.out.println();
         for(int i = 0; i < elementiADisposizione.size(); i++) {
             for(int j = 0; j < elementiADisposizione.size(); j++) {
+                //stampa l'indice per ogni riga
                 if(j == 0) {
                     System.out.print(String.format(FORMAT_EQUILIBRIO, elementiADisposizione.get(i)) + " ");
                 }
+                //rende più pulita la tabella centrando meglio i numeri negativi
                 if(matrice[i][j] < 0) {
                     System.out.print(String.format(FORMAT_EQUILIBRIO, PrettyStrings.center(String.valueOf(matrice[i][j]), 10)));
                 }

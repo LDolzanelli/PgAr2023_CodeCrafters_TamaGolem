@@ -10,7 +10,7 @@ import static it.unibs.fp.tamagolem.TextConstants.*;
 
 public class MenuTamagolem {
 
-    public static int menuSceltaDifficoltà() {
+    public static int menuSceltaDifficolta() {
         System.out.println(PrettyStrings.frame(BENVENUTO, 30, true, false));
         Menu menuDifficoltà = new Menu(SCELTA_DIFFICOLTA, VOCI_MENU_PRINCIPALE, false, true, true);
         int scelta = menuDifficoltà.choose();
