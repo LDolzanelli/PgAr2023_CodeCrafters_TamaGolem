@@ -15,7 +15,7 @@ public class Battaglia {
     private Map<String, Integer> scortaComunePietre = new HashMap<>();
     private ArrayList<String> elementiADisposizione = new ArrayList<>();
 
-    public Battaglia(int numElementi) {
+    public Battaglia(int numElementi, int numPietre, Allenatore allenatoreA, Allenatore allenatoreB) {
         // A seconda della difficoltà scelta, vengono selezionati gli elementi da usare
         // nella battaglia
         for (int i = 0; i < numElementi; i++) {
@@ -25,11 +25,9 @@ public class Battaglia {
         MatriceDiEquilibrio matriceDiEquilibrio = new MatriceDiEquilibrio(elementiADisposizione, numElementi);
 
         // Genera il numero di pietre che i Tamagolem possono tenere
-        int numPietre = generaNumPietre(numElementi);
+        
 
-        // Creazione allenatori
-        Allenatore allenatoreA = new Allenatore(numElementi, numPietre, "Allenatore Ash");
-        Allenatore allenatoreB = new Allenatore(numElementi, numPietre, "Allenatore Gary");
+
 
         // Generazione della scorta di pietre comune tramite HashMap
         aggiuntaPietreScorta(elementiADisposizione, allenatoreA.getNumTamagolem(), numPietre);
@@ -151,9 +149,7 @@ public class Battaglia {
         return tamagolem;
     }
 
-    private int generaNumPietre(int numElementi) {
-        return (((numElementi + 1) / 3) + 1);
-    }
+
 
     private void aggiuntaPietreScorta(ArrayList<String> listaElementi, int numGolem, int numPietre) {
         // Algoritmo che calcola quante pietre ci sono nella scorta comune a seconda del
