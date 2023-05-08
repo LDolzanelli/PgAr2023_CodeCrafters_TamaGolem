@@ -11,7 +11,10 @@ public class TextConstants {
     public static final String PIETRE = "PIETRE";
     public static final String VITA_TAMAGOLEM = "VITA TAMAGOLEM";
     public static final String INVIO_PER_CONTINUARE = "\nPremi invio per continuare";
+    public static final String TURNO_X = "TURNO %d";
     public static final String DANNO = "Danno: ";
+    public static final String DUE_PUNTI = ": ";
+    public static final String FRECCIA = " -> ";
     public static final String PIETRE_RIMANENTI = "Scorta di pietre rimanenti: ";
     public static final String SELEZIONE_PIETRA = "Selezione pietra numero ";
     public static final String SELEZIONA_LE_PIETRE = ": Seleziona le pietre per il tuo Tamagolem!";

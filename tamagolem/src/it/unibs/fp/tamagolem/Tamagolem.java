@@ -8,7 +8,7 @@ public class Tamagolem {
     private int vitaAttuale = VITA_INIZIALE;
     private final int numPietre;
     private final ArrayList<String> pietreSelezionate = new ArrayList<>();
-    private int counter = 0;
+    private int pietraDaLanciare = 0;
 
     public Tamagolem(int numPietre) {
         this.numPietre = numPietre;
@@ -24,17 +24,17 @@ public class Tamagolem {
 
     public String getPietra() {
 
-        return pietreSelezionate.get(counter);
+        return pietreSelezionate.get(pietraDaLanciare);
 
     }
 
     public void pietraSuccessiva() {
 
-        if (counter == pietreSelezionate.size() - 1) {
-            counter = 0;
+        if (pietraDaLanciare == pietreSelezionate.size() - 1) {
+            pietraDaLanciare = 0;
         }else
         {
-            counter++;
+            pietraDaLanciare++;
         }
 
        

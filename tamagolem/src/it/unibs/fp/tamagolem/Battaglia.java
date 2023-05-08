@@ -93,23 +93,23 @@ public class Battaglia {
                     // mostra dettagli lotta
                     System.out.println(TamagolemMain.FLUSH);
 
-                    System.out.println(PrettyStrings.frame(String.format("TURNO %d", turno), 11, true, true));
+                    System.out.println(PrettyStrings.frame(String.format(TURNO_X, turno), 11, true, true));
                     System.out.println(TAMAGOLEM_A_DISPOSIZIONE);
-                    System.out.println(allenatoreA.getNome() + ": " + allenatoreA.getNumTamagolem());
-                    System.out.println(allenatoreB.getNome() + ": " + allenatoreB.getNumTamagolem());
+                    System.out.println(allenatoreA.getNome() + DUE_PUNTI + allenatoreA.getNumTamagolem());
+                    System.out.println(allenatoreB.getNome() + DUE_PUNTI + allenatoreB.getNumTamagolem());
                     System.out.println();
 
                     System.out.println(PIETRE);
 
-                    System.out.println(allenatoreA.getNome() + ": " + tamagolemA.getPietra() + " -> " + statoPietraA);
-                    System.out.println(allenatoreB.getNome() + ": " + tamagolemB.getPietra() + " -> " + statoPietraB);
+                    System.out.println(allenatoreA.getNome() + DUE_PUNTI + tamagolemA.getPietra() + FRECCIA + statoPietraA);
+                    System.out.println(allenatoreB.getNome() + DUE_PUNTI + tamagolemB.getPietra() + FRECCIA + statoPietraB);
 
                     System.out.println(DANNO + Math.abs(danno));
                     System.out.println();
 
                     System.out.println(VITA_TAMAGOLEM);
-                    System.out.println(VITA_TAMAGOLEM_DELL + allenatoreA.getNome() + ": " + mostraVitaA);
-                    System.out.println(VITA_TAMAGOLEM_DELL + allenatoreB.getNome() + ": " + mostraVitaB);
+                    System.out.println(VITA_TAMAGOLEM_DELL + allenatoreA.getNome() + DUE_PUNTI + mostraVitaA);
+                    System.out.println(VITA_TAMAGOLEM_DELL + allenatoreB.getNome() + DUE_PUNTI + mostraVitaB);
 
                     System.out.println(INVIO_PER_CONTINUARE);
 
