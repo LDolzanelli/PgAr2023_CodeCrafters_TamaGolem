@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+
 import static it.unibs.fp.tamagolem.TextConstants.*;
 
 public class Battaglia {
@@ -28,15 +29,14 @@ public class Battaglia {
         // Generazione della scorta di pietre comune tramite HashMap
         aggiuntaPietreScorta(allenatoreA.getNumTamagolem(), numPietre);
 
+
+    }
+
+    public void eseguiBattaglia(int numPietre, Allenatore allenatoreA, Allenatore allenatoreB) {
+        Scanner scanner = new Scanner(System.in);
         int danno;
         int turno = 1;
-        String statoPietraA = null;
-        String statoPietraB = null;
-        String mostraVitaA = null;
-        String mostraVitaB = null;
-        Scanner scanner = new Scanner(System.in);
 
-        // LOTTA
         Tamagolem tamagolemA = evocaTamagolem(allenatoreA, numPietre);
         Tamagolem tamagolemB;
 
@@ -78,15 +78,17 @@ public class Battaglia {
         }
 
         scanner.close();
+    }
 
+    public String getVincitore(Allenatore allenatoreA, Allenatore allenatoreB, Tamagolem tamagolemA, Tamagolem tamagolemB) {
         if (allenatoreA.getNumTamagolem() <= 0 && tamagolemB.getVitaAttuale() > 0) {
-            System.out.println(FLUSH);
-            System.out
-                    .println(PrettyStrings.frame(VINTO + allenatoreB.getNome().toUpperCase(), 80, true, true));
+            return allenatoreB.getNome();
+
         } else if (allenatoreB.getNumTamagolem() <= 0 && tamagolemA.getVitaAttuale() > 0) {
-            System.out.println(FLUSH);
-            System.out.println(PrettyStrings.frame(VINTO + allenatoreA.getNome().toUpperCase(), 80, true, true));
-        }
+            return allenatoreA.getNome();
+            //System.out.println(FLUSH);
+            //System.out.println(PrettyStrings.frame(VINTO + allenatoreA.getNome().toUpperCase(), 80, true, true));
+        }else return null;
 
     }
 

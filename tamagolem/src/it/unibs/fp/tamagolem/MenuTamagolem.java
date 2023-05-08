@@ -65,7 +65,7 @@ public class MenuTamagolem {
         }
 
 
-        System.out.println(TamagolemMain.FLUSH);
+        System.out.println(FLUSH);
     
         System.out.println(PrettyStrings.frame(String.format(TURNO_X, turno), 11, true, true));
         System.out.println(TAMAGOLEM_A_DISPOSIZIONE);
@@ -86,6 +86,11 @@ public class MenuTamagolem {
         System.out.println(VITA_TAMAGOLEM_DELL + allenatoreB.getNome() + DUE_PUNTI + mostraVitaB);
     
         System.out.println(INVIO_PER_CONTINUARE);
+    }
+
+    public static void mostraVincitore(String vincitore) {
+        System.out.println(FLUSH);
+        System.out.println(PrettyStrings.frame(VINTO + vincitore.toUpperCase(), 80, true, true));
     }
 
  
