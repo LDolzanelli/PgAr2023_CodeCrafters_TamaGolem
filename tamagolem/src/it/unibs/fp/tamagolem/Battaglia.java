@@ -145,10 +145,10 @@ public class Battaglia {
     /**
      * controllo per evitare di entrare in un loop infinito durante la battaglia, nel quale gli elementi
      * possono coincidere all'infinito se selezionati nello stesso ordine
-     * @param tamagolemDaEvocare
-     * @param tamagolemEvocato
-     * @param numPietre
-     * @return
+     * @param tamagolemDaEvocare il tamagolem nel quale vengono caricate le pietre
+     * @param tamagolemEvocato il tamagolem già presente in campo
+     * @param numPietre il numero di pietre che i tamagolem possono tenere
+     * @return true se i tamagolem hanno lo stesso ordine di pietre, false altrimenti
      */
     private boolean checkStessePietre(Tamagolem tamagolemDaEvocare, Tamagolem tamagolemEvocato, int numPietre) {
         int i;
@@ -176,8 +176,12 @@ public class Battaglia {
         return true;
     }
 
+    /**
+     * vengono ripristinate le pietre nel caso la scelta non sia valida (metodo checkStessePietre, caso true)
+     * @param tamagolem il tamagolem appena evocato, usato per recuperare le pietre appena selezionate
+     */
     private void reinserimentoPietreScortaComune(Tamagolem tamagolem) {
-        //Si accede al valore della hashmap grazie all'arraylist di pietre appena selezionate. viene ristabilito
+        //Si accede al valore della hashmap grazie all'arraylist di pietre appena selezionate
         //il valore iniziale
         for(String s : tamagolem.getPietreSelezionate()) {
             int numPietreRimaste = (scortaComunePietre.get(s) + 1);
@@ -185,6 +189,12 @@ public class Battaglia {
         }
     }
 
+    /**
+     * ad ogni allenatore viene assegnato un tamagolem all'inizio della partita o nel caso uno venga sconfitto
+     * @param allenatore l'allenatore alla quale viene associato il tamagolem
+     * @param numPietre il numero di pietre che il tamagolem può tenere
+     * @return istanza di tamagolem
+     */
     private Tamagolem evocaTamagolem(Allenatore allenatore, int numPietre) {
         Tamagolem tamagolem = new Tamagolem(numPietre);
 
@@ -202,13 +212,15 @@ public class Battaglia {
     }
 
 
-
-    private void aggiuntaPietreScorta(int numGolem, int numPietre) {
-        // Algoritmo che calcola quante pietre ci sono nella scorta comune a seconda del
-        // numero di elementi (e di conseguenza pietre, golem..)
+    /**
+     * a seconda degli elementi a disposizione viene calcolata e riempita la scorta comune
+     * @param numTamagolem il numero di tamagolem che ogni allenatore ha a disposizione
+     * @param numPietre il numero di pietre che ogni tamagolem ha a disposizione
+     */
+    private void aggiuntaPietreScorta(int numTamagolem, int numPietre) {
         // la formula è leggermente diversa perchè in certi casi la scorta comune non bastava
         // per i tamagolem di ogni allenatore
-        int numPietrePerElemento = ((3 * numGolem * numPietre) / elementiADisposizione.size());
+        int numPietrePerElemento = ((3 * numTamagolem * numPietre) / elementiADisposizione.size());
         for (String s : elementiADisposizione) {
             // Le pietre vengono messe nell'hashmap insieme al numero iniziale
             scortaComunePietre.put(s, numPietrePerElemento);
@@ -216,9 +228,12 @@ public class Battaglia {
 
     }
 
+    /**
+     * Mappa che assegna ad ogni elemento un indice, per ordinare la hashmap e facilitare la selezione
+     * delle pietre
+     * @return la hashmap con gli elementi indicizzati
+     */
     private Map<Integer, String> generaIndiceScorta() {
-        // Mappa temporanea che assegna ad ogni elemento un indice, torna utile nella
-        // selezione della pietra desiderata
         Map<Integer, String> indicePietre = new HashMap<>();
         int counter = 1;
         for (String str : scortaComunePietre.keySet()) {
@@ -228,6 +243,12 @@ public class Battaglia {
         return indicePietre;
     }
 
+    /**
+     * visualizzazione della scorta comune per poter scegliere dalle pietre disponibili
+     * @param indicePietre la mappa generata con gli indici associati agli elementi
+     * @param allenatore l'allenatore che sta selezionando le pietre
+     * @param tamagolem il tamagolem alla quale si stanno aggiungendo le pietre
+     */
     private void visualizzaScortaComune(Map<Integer, String> indicePietre, Allenatore allenatore, Tamagolem tamagolem) {
         // Visualizza la scorta con l'indice assegnato all'elemento e la quantità di
         // pietre rimanenti
@@ -247,6 +268,13 @@ public class Battaglia {
         }
     }
 
+    /**
+     * a seconda dell'indice generato vengono scelte le pietre desiderate
+     * @param indicePietre la hashmap con gli indici degli elementi nella scorta
+     * @param allenatore l'allenatore che sta selezionando le pietre
+     * @param tamagolem il tamagolem alla quale si stanno aggiungendo le pietre
+     * @return
+     */
     private String sceltaPietra(Map<Integer, String> indicePietre, Allenatore allenatore, Tamagolem tamagolem) {
         visualizzaScortaComune(indicePietre, allenatore, tamagolem);
         String pietraSelezionata;
@@ -266,6 +294,9 @@ public class Battaglia {
         return pietraSelezionata;
     }
 
+    /**
+     * Visualizzazione finale dell'equilibrio generato ad inizio partita tramite matrice
+     */
     public void visualizzaEquilibrio() {
         //viene caricata la matrice
         int[][] matrice = matriceDiEquilibrio.getMatrice();
