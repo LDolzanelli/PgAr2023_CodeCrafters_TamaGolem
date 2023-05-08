@@ -10,6 +10,11 @@ public class Allenatore {
         this.nome = nome;
     }
 
+    /**
+     * viene assegnato il tamagolem appena evocato all'allenatore corretto, diminuendo il numero di
+     * tamagolem a disposizione dell'allenatore
+     * @param tamagolem l'istanza di tamagolem generata
+     */
     public void setTamagolemADisposizione(Tamagolem tamagolem) {
         tamagolemADisposizione = tamagolem;
         numTamagolem--;
@@ -27,6 +32,12 @@ public class Allenatore {
         return nome;
     }
 
+    /**
+     * formula che genera il numero di tamagolem che l'allenatore ha a disposizione
+     * @param numElementi il numero di elementi a disposizione a seconda della difficoltà
+     * @param numPietre il numero di pietre che ogni tamagolem ha a disposizione
+     * @return il numero di tamagolem a disposizione
+     */
     private int generaNumTamagolem(int numElementi, int numPietre) {
         return (((numElementi - 1) * (numElementi - 2)) / (2 * numPietre));
     }

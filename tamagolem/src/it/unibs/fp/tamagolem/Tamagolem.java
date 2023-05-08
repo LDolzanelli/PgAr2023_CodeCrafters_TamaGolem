@@ -28,22 +28,33 @@ public class Tamagolem {
 
     }
 
+    /**
+     * metodo che tiene traccia di quale pietra è stata lanciata per ultima da un tamagolem, nel caso rimanga
+     * in vita dopo una lotta
+     */
     public void pietraSuccessiva() {
 
+        //nel caso di overflow viene resettato a 0
         if (pietraDaLanciare == pietreSelezionate.size() - 1) {
             pietraDaLanciare = 0;
-        }else
-        {
+        } else {
             pietraDaLanciare++;
         }
 
-       
+    }
+
+    public int getPietraDaLanciare() {
+        return pietraDaLanciare;
     }
 
     public int getVitaAttuale() {
         return vitaAttuale;
     }
 
+    /**
+     * la vita attuale del tamagolem viene diminuita a seguito di danni subiti durante la battaglia
+     * @param danno il danno dato dall'interazione degli elementi delle pietre lanciate
+     */
     public void subireDanno(int danno) {
 
         vitaAttuale -= danno;

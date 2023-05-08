@@ -8,7 +8,7 @@ public class MatriceDiEquilibrio
 
     private int range;
     final static int NUM_PROVE_MAX = 10;
-    int matrice[][];
+    int[][] matrice;
     ArrayList<String> elementi;
 
 
@@ -24,9 +24,9 @@ public class MatriceDiEquilibrio
 
     public int[][] generaMatrice(int numElementi)
     {
-        int matrice[][] = new int[numElementi][numElementi];
+        int[][] matrice = new int[numElementi][numElementi];
 
-        boolean riprova = false;
+        boolean riprova;
 
         for (int i = 0; i < numElementi; i++) {
             int somma = 0;
@@ -74,7 +74,7 @@ public class MatriceDiEquilibrio
                 }
             }
 
-            if (i > 0 && (matrice[i][numElementi - 1] == 0 && i != numElementi - 1) && i < numElementi - 2) {
+            if ((matrice[i][numElementi - 1] == 0 && i != numElementi - 1) && i < numElementi - 2) {
                 i--;
 
             }
@@ -88,7 +88,12 @@ public class MatriceDiEquilibrio
         return matrice;
 
     }
-    
+
+    /**
+     * genera un numero casuale in un range fornito, escludendo lo zero (ogni elemento deve avere interazione)
+     * @param range il range predeterminato
+     * @return il numero casuale
+     */
     public int generaCasualeSenzaZero(int range) {
         Random rand = new Random();
         int casuale;
@@ -99,6 +104,8 @@ public class MatriceDiEquilibrio
 
         return casuale;
     }
+
+
 
     public int getPotenzaTraDueElementi(String elementoA, String elementoB)
     {
@@ -119,4 +126,7 @@ public class MatriceDiEquilibrio
         return matrice[indixElemA][indixElemB];
     }
 
+    public int[][] getMatrice() {
+        return matrice;
+    }
 }
