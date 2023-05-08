@@ -12,7 +12,11 @@ public class Allenatore {
 
     public void setTamagolemADisposizione(Tamagolem tamagolem) {
         tamagolemADisposizione = tamagolem;
-        numTamagolem --;
+        numTamagolem--;
+    }
+
+    public Tamagolem getTamagolemADisposizione() {
+        return tamagolemADisposizione;
     }
 
     public int getNumTamagolem() {

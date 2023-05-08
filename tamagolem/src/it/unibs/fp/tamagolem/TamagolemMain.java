@@ -12,7 +12,10 @@ public class TamagolemMain {
         int numElementi;
         int numPietre;
 
+        // A seconda della difficoltà scelta, vengono selezionati gli elementi da usare
+        // nella battaglia
         numElementi = generaNumeroElementi();
+        // Genera il numero di pietre che i Tamagolem possono tenere
         numPietre = generaNumPietre(numElementi);
 
         // Creazione allenatori

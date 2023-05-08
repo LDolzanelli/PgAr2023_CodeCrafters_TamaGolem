@@ -16,37 +16,26 @@ public class Battaglia {
     private ArrayList<String> elementiADisposizione = new ArrayList<>();
 
     public Battaglia(int numElementi, int numPietre, Allenatore allenatoreA, Allenatore allenatoreB) {
-        // A seconda della difficoltà scelta, vengono selezionati gli elementi da usare
-        // nella battaglia
+
         for (int i = 0; i < numElementi; i++) {
             elementiADisposizione.add(TamagolemMain.NOME_ELEMENTI[i]);
         }
         // Viene generata la matrice che mette in equilibrio gli elementi selezionati
         MatriceDiEquilibrio matriceDiEquilibrio = new MatriceDiEquilibrio(elementiADisposizione, numElementi);
 
-        // Genera il numero di pietre che i Tamagolem possono tenere
-        
-
-
-
         // Generazione della scorta di pietre comune tramite HashMap
         aggiuntaPietreScorta(elementiADisposizione, allenatoreA.getNumTamagolem(), numPietre);
 
         int danno;
         int turno = 0;
-        String statoPietraA = null;
-        String statoPietraB = null;
-        String mostraVitaA = null;
-        String mostraVitaB = null;
         Scanner scanner = new Scanner(System.in);
 
         // LOTTA
-
         Tamagolem tamagolemA = evocaTamagolem(allenatoreA, numPietre);
         Tamagolem tamagolemB = evocaTamagolem(allenatoreB, numPietre);
 
         while ((allenatoreA.getNumTamagolem() > 0 && allenatoreB.getNumTamagolem() > 0)
-                || (allenatoreA.getNumTamagolem() == 0 && tamagolemA.getVitaAttuale() > 0) 
+                || (allenatoreA.getNumTamagolem() == 0 && tamagolemA.getVitaAttuale() > 0)
                 || (allenatoreB.getNumTamagolem() == 0 && tamagolemB.getVitaAttuale() > 0)) {
 
             if (tamagolemA.getVitaAttuale() <= 0) {
@@ -61,56 +50,9 @@ public class Battaglia {
 
                 danno = matriceDiEquilibrio.getPotenzaTraDueElementi(tamagolemA.getPietra(), tamagolemB.getPietra());
 
-                if (danno > 0) {
-                    tamagolemB.subireDanno(danno);
-                    statoPietraA = PIETRA_FORTE;
-                    statoPietraB = PIETRA_DEBOLE;
-
-                } else if (danno < 0) {
-                    tamagolemA.subireDanno(Math.abs(danno));
-                    statoPietraB = PIETRA_FORTE;
-                    statoPietraA = PIETRA_DEBOLE;
-                } else {
-                    statoPietraB = STESSA_PIETRA;
-                    statoPietraA = STESSA_PIETRA;
-                }
-
-                if (tamagolemA.getVitaAttuale() > 0) {
-                    mostraVitaA = String.valueOf(tamagolemA.getVitaAttuale());
-                } else {
-                    mostraVitaA = MORTO;
-                }
-
-                if (tamagolemB.getVitaAttuale() > 0) {
-                    mostraVitaB = String.valueOf(tamagolemB.getVitaAttuale());
-                } else {
-                    mostraVitaB = MORTO;
-                }
-
                 do {
                     // mostra dettagli lotta
-                    System.out.println(TamagolemMain.FLUSH);
-
-                    System.out.println(PrettyStrings.frame(String.format(TURNO_X, turno), 11, true, true));
-                    System.out.println(TAMAGOLEM_A_DISPOSIZIONE);
-                    System.out.println(allenatoreA.getNome() + DUE_PUNTI + allenatoreA.getNumTamagolem());
-                    System.out.println(allenatoreB.getNome() + DUE_PUNTI + allenatoreB.getNumTamagolem());
-                    System.out.println();
-
-                    System.out.println(PIETRE);
-
-                    System.out.println(allenatoreA.getNome() + DUE_PUNTI + tamagolemA.getPietra() + FRECCIA + statoPietraA);
-                    System.out.println(allenatoreB.getNome() + DUE_PUNTI + tamagolemB.getPietra() + FRECCIA + statoPietraB);
-
-                    System.out.println(DANNO + Math.abs(danno));
-                    System.out.println();
-
-                    System.out.println(VITA_TAMAGOLEM);
-                    System.out.println(VITA_TAMAGOLEM_DELL + allenatoreA.getNome() + DUE_PUNTI + mostraVitaA);
-                    System.out.println(VITA_TAMAGOLEM_DELL + allenatoreB.getNome() + DUE_PUNTI + mostraVitaB);
-
-                    System.out.println(INVIO_PER_CONTINUARE);
-
+                    MenuTamagolem.mostraDettagliBattaglia(allenatoreA, allenatoreB, danno, turno, tamagolemA, tamagolemB);
                 } while (!scanner.nextLine().isEmpty());
 
                 tamagolemA.pietraSuccessiva();
@@ -120,6 +62,8 @@ public class Battaglia {
 
             }
         }
+
+        scanner.close();
 
         if (allenatoreA.getNumTamagolem() <= 0 && tamagolemB.getVitaAttuale() > 0) {
             System.out.println(TamagolemMain.FLUSH);
@@ -131,6 +75,8 @@ public class Battaglia {
         }
 
     }
+
+
 
     private Tamagolem evocaTamagolem(Allenatore allenatore, int numPietre) {
         // Viene pescato il primo Tamagolem già creato con la creazione dell'allenatore
@@ -148,8 +94,6 @@ public class Battaglia {
 
         return tamagolem;
     }
-
-
 
     private void aggiuntaPietreScorta(ArrayList<String> listaElementi, int numGolem, int numPietre) {
         // Algoritmo che calcola quante pietre ci sono nella scorta comune a seconda del

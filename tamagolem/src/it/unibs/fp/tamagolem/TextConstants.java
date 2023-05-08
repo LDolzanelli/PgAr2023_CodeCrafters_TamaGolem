@@ -23,5 +23,5 @@ public class TextConstants {
     public static final String BENVENUTO = "BENVENUTO IN TAMAGOLEM!";
     public static final String SCELTA_DIFFICOLTA = "Scegli la difficoltà";
     public static final String[] VOCI_MENU_PRINCIPALE = {"Facile", "Medio", "Difficile"};
-
+    public static final String ALLENATORE = "Allenatore ";
 }
