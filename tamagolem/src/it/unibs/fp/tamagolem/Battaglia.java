@@ -15,6 +15,8 @@ public class Battaglia {
     private Map<String, Integer> scortaComunePietre = new HashMap<>();
     private ArrayList<String> elementiADisposizione = new ArrayList<>();
 
+    MatriceDiEquilibrio matriceDiEquilibrio;
+
     public Battaglia(int numElementi, int numPietre, Allenatore allenatoreA, Allenatore allenatoreB) {
         // A seconda della difficoltà scelta, vengono selezionati gli elementi da usare
         // nella battaglia
@@ -22,7 +24,7 @@ public class Battaglia {
             elementiADisposizione.add(TamagolemMain.NOME_ELEMENTI[i]);
         }
         // Viene generata la matrice che mette in equilibrio gli elementi selezionati
-        MatriceDiEquilibrio matriceDiEquilibrio = new MatriceDiEquilibrio(elementiADisposizione, numElementi);
+        matriceDiEquilibrio = new MatriceDiEquilibrio(elementiADisposizione, numElementi);
 
         // Genera il numero di pietre che i Tamagolem possono tenere
         
@@ -30,7 +32,7 @@ public class Battaglia {
 
 
         // Generazione della scorta di pietre comune tramite HashMap
-        aggiuntaPietreScorta(elementiADisposizione, allenatoreA.getNumTamagolem(), numPietre);
+        aggiuntaPietreScorta(allenatoreA.getNumTamagolem(), numPietre);
 
         int danno;
         int turno = 0;
@@ -43,18 +45,26 @@ public class Battaglia {
         // LOTTA
 
         Tamagolem tamagolemA = evocaTamagolem(allenatoreA, numPietre);
-        Tamagolem tamagolemB = evocaTamagolem(allenatoreB, numPietre);
+        Tamagolem tamagolemB;
+
+        do {
+            tamagolemB = evocaTamagolem(allenatoreB, numPietre);
+        } while(checkStessePietre(tamagolemA, tamagolemB, numPietre));
 
         while ((allenatoreA.getNumTamagolem() > 0 && allenatoreB.getNumTamagolem() > 0)
-                || (allenatoreA.getNumTamagolem() == 0 && tamagolemA.getVitaAttuale() > 0) 
-                || (allenatoreB.getNumTamagolem() == 0 && tamagolemB.getVitaAttuale() > 0)) {
+                || (allenatoreA.getNumTamagolem() == 0 && tamagolemA.getVitaAttuale() > 0 && !(allenatoreB.getNumTamagolem() == 0 && tamagolemB.getVitaAttuale() <= 0))
+                || (allenatoreB.getNumTamagolem() == 0 && tamagolemB.getVitaAttuale() > 0) && !(allenatoreA.getNumTamagolem() == 0 && tamagolemA.getVitaAttuale() <= 0)) {
 
             if (tamagolemA.getVitaAttuale() <= 0) {
-                tamagolemA = evocaTamagolem(allenatoreA, numPietre);
+                do {
+                    tamagolemA = evocaTamagolem(allenatoreA, numPietre);
+                } while(checkStessePietre(tamagolemA, tamagolemB, numPietre));
             }
 
             if (tamagolemB.getVitaAttuale() <= 0) {
-                tamagolemB = evocaTamagolem(allenatoreB, numPietre);
+                do {
+                    tamagolemB = evocaTamagolem(allenatoreB, numPietre);
+                } while(checkStessePietre(tamagolemA, tamagolemB, numPietre));
             }
 
             while (tamagolemA.getVitaAttuale() > 0 && tamagolemB.getVitaAttuale() > 0) {
@@ -89,7 +99,7 @@ public class Battaglia {
 
                 do {
                     // mostra dettagli lotta
-                    System.out.println(TamagolemMain.FLUSH);
+                    System.out.println(FLUSH);
 
                     System.out.println(PrettyStrings.frame(String.format(TURNO_X, turno), 11, true, true));
                     System.out.println(TAMAGOLEM_A_DISPOSIZIONE);
@@ -122,14 +132,33 @@ public class Battaglia {
         }
 
         if (allenatoreA.getNumTamagolem() <= 0 && tamagolemB.getVitaAttuale() > 0) {
-            System.out.println(TamagolemMain.FLUSH);
+            System.out.println(FLUSH);
             System.out
-                    .println(PrettyStrings.frame(VINTO + allenatoreB.getNome().toUpperCase(), 80, true, false));
+                    .println(PrettyStrings.frame(VINTO + allenatoreB.getNome().toUpperCase(), 80, true, true));
         } else if (allenatoreB.getNumTamagolem() <= 0 && tamagolemA.getVitaAttuale() > 0) {
-            System.out.println(TamagolemMain.FLUSH);
-            System.out.println(PrettyStrings.frame(VINTO + allenatoreA.getNome().toUpperCase(), 80, true, false));
+            System.out.println(FLUSH);
+            System.out.println(PrettyStrings.frame(VINTO + allenatoreA.getNome().toUpperCase(), 80, true, true));
         }
 
+    }
+
+    private boolean checkStessePietre(Tamagolem tamagolemA, Tamagolem tamagolemB, int numPietre) {
+        for(int i = 0; i < numPietre; i++) {
+            if(!tamagolemA.getPietreSelezionate().get(i).equals(tamagolemB.getPietreSelezionate().get(i))) {
+                return false;
+            }
+        }
+        reinserimentoPietreScortaComune(tamagolemA);
+        System.out.println(ATTENZIONE_PAREGGIO);
+        System.out.println(INSERIRE_NUOVAMENTE_PIETRE);
+        return true;
+    }
+
+    private void reinserimentoPietreScortaComune(Tamagolem tamagolem) {
+        for(String s : tamagolem.getPietreSelezionate()) {
+            int numPietreRimaste = (scortaComunePietre.get(s) + 1);
+            scortaComunePietre.put(s, numPietreRimaste);
+        }
     }
 
     private Tamagolem evocaTamagolem(Allenatore allenatore, int numPietre) {
@@ -151,11 +180,13 @@ public class Battaglia {
 
 
 
-    private void aggiuntaPietreScorta(ArrayList<String> listaElementi, int numGolem, int numPietre) {
+    private void aggiuntaPietreScorta(int numGolem, int numPietre) {
         // Algoritmo che calcola quante pietre ci sono nella scorta comune a seconda del
         // numero di elementi (e di conseguenza pietre, golem..)
-        int numPietrePerElemento = ((2 * numGolem * numPietre) / listaElementi.size());
-        for (String s : listaElementi) {
+        // NB: Abbiamo cambiato la formula perchè in certi casi (ad esempio numElementi = 5)
+        // la scorta comune non bastava per i tamagolem di ogni allenatore
+        int numPietrePerElemento = ((3 * numGolem * numPietre) / elementiADisposizione.size());
+        for (String s : elementiADisposizione) {
             // Le pietre vengono messe nell'hashmap insieme al numero iniziale
             scortaComunePietre.put(s, numPietrePerElemento);
         }
@@ -177,7 +208,7 @@ public class Battaglia {
     private void visualizzaScortaComune(Map<Integer, String> indicePietre, Allenatore allenatore, Tamagolem tamagolem) {
         // Visualizza la scorta con l'indice assegnato all'elemento e la quantità di
         // pietre rimanenti
-        System.out.println(TamagolemMain.FLUSH);
+        System.out.println(FLUSH);
         String nomeAllenatore = PrettyStrings.frame(allenatore.getNome() +
                 SELEZIONA_LE_PIETRE, 100, true, false);
         System.out.println(nomeAllenatore);
@@ -189,7 +220,7 @@ public class Battaglia {
         for (Integer indice : indicePietre.keySet()) {
             String nomeElemento = indicePietre.get(indice);
             Integer numPietre = scortaComunePietre.get(nomeElemento);
-            System.out.println(indice + "- " + "Elemento: " + nomeElemento + "   Pietre: " + numPietre);
+            System.out.println(indice + ELEMENTO_SCORTA + nomeElemento + PIETRE_SCORTA + numPietre);
         }
     }
 
@@ -212,4 +243,31 @@ public class Battaglia {
         return pietraSelezionata;
     }
 
+    public void visualizzaEquilibrio() {
+        int[][] matrice = matriceDiEquilibrio.getMatrice();
+        String messaggioEquilibrio = PrettyStrings.frame(MESSAGGIO_EQUILIBRIO, 80, true, true);
+        System.out.println(messaggioEquilibrio);
+        for(int i = 0; i < elementiADisposizione.size(); i++) {
+            if(i == 0) {
+                System.out.print(String.format(FORMAT_EQUILIBRIO, " "));
+            }
+            System.out.print(String.format(FORMAT_EQUILIBRIO, elementiADisposizione.get(i)));
+        }
+        System.out.println();
+        for(int i = 0; i < elementiADisposizione.size(); i++) {
+            for(int j = 0; j < elementiADisposizione.size(); j++) {
+                if(j == 0) {
+                    System.out.print(String.format(FORMAT_EQUILIBRIO, elementiADisposizione.get(i)) + " ");
+                }
+                if(matrice[i][j] < 0) {
+                    System.out.print(String.format(FORMAT_EQUILIBRIO, PrettyStrings.center(String.valueOf(matrice[i][j]), 10)));
+                }
+                else {
+                    System.out.print(String.format(FORMAT_EQUILIBRIO, PrettyStrings.center(String.valueOf(matrice[i][j]), 8)));
+                }
+
+            }
+            System.out.println();
+        }
+    }
 }

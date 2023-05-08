@@ -1,28 +1,37 @@
 package it.unibs.fp.tamagolem;
 
+import it.kibo.fp.lib.InputData;
+
 import java.util.Random;
+
+import static it.unibs.fp.tamagolem.TextConstants.*;
 
 public class TamagolemMain {
 
-    public static final String FLUSH = "\033[H\033[2J";
-
     public static final String[] NOME_ELEMENTI = {"Lotta", "Volante", "Terra", "Spettro", "Acciaio", 
     "Psico", "Ghiaccio", "Veleno", "Drago", "Buio"};
+
     public static void main(String[] args) {
         int numElementi;
         int numPietre;
+        boolean nuovaPartita;
 
-        numElementi = generaNumeroElementi();
-        numPietre = generaNumPietre(numElementi);
+        do {
+            numElementi = generaNumeroElementi();
+            numPietre = generaNumPietre(numElementi);
 
-        // Creazione allenatori
-        Allenatore allenatoreA = new Allenatore(numElementi, numPietre, MenuTamagolem.inserimentoNomeAllenatore(1));
-        Allenatore allenatoreB = new Allenatore(numElementi, numPietre, MenuTamagolem.inserimentoNomeAllenatore(2));
-        
+            // Creazione allenatori
+            Allenatore allenatoreA = new Allenatore(numElementi, numPietre, MenuTamagolem.inserimentoNomeAllenatore(1));
+            Allenatore allenatoreB = new Allenatore(numElementi, numPietre, MenuTamagolem.inserimentoNomeAllenatore(2));
 
-        Battaglia battaglia = new Battaglia(numElementi, numPietre, allenatoreA, allenatoreB);
-        
-        
+
+            Battaglia battaglia = new Battaglia(numElementi, numPietre, allenatoreA, allenatoreB);
+
+            battaglia.visualizzaEquilibrio();
+
+            nuovaPartita = InputData.readYesOrNo(NUOVA_PARTITA);
+        } while(nuovaPartita);
+
 
     }
 
@@ -30,7 +39,7 @@ public class TamagolemMain {
     
     public static int generaNumeroElementi() {
 
-        int difficoltaSelezionata = MenuTamagolem.menuSceltaDifficoltà();
+        int difficoltaSelezionata = MenuTamagolem.menuSceltaDifficolta();
         int numeroElementi = 0;
         //L'elemento in input è un numero tra 0 e 3, forzato dalla scelta del menu
         switch (difficoltaSelezionata) {

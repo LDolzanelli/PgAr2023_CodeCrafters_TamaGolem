@@ -8,7 +8,7 @@ public class MatriceDiEquilibrio
 
     private int range;
     final static int NUM_PROVE_MAX = 10;
-    int matrice[][];
+    int[][] matrice;
     ArrayList<String> elementi;
 
 
@@ -24,7 +24,7 @@ public class MatriceDiEquilibrio
 
     public int[][] generaMatrice(int numElementi)
     {
-        int matrice[][] = new int[numElementi][numElementi];
+        int[][] matrice = new int[numElementi][numElementi];
 
         boolean riprova = false;
 
@@ -74,7 +74,7 @@ public class MatriceDiEquilibrio
                 }
             }
 
-            if (i > 0 && (matrice[i][numElementi - 1] == 0 && i != numElementi - 1) && i < numElementi - 2) {
+            if ((matrice[i][numElementi - 1] == 0 && i != numElementi - 1) && i < numElementi - 2) {
                 i--;
 
             }
@@ -119,4 +119,7 @@ public class MatriceDiEquilibrio
         return matrice[indixElemA][indixElemB];
     }
 
+    public int[][] getMatrice() {
+        return matrice;
+    }
 }
