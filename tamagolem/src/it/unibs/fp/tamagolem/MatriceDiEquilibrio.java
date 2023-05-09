@@ -8,7 +8,7 @@ public class MatriceDiEquilibrio
 
     private final int range;
     final static int NUM_PROVE_MAX = 10;
-    int[][] matrice;
+    private final int[][] matrice;
     ArrayList<String> elementi;
 
 

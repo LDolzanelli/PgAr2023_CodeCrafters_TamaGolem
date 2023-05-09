@@ -29,7 +29,6 @@ public class Battaglia {
         // Generazione della scorta di pietre comune tramite HashMap
         aggiuntaPietreScorta(allenatoreA.getNumTamagolem(), numPietre);
 
-
     }
 
     /**
