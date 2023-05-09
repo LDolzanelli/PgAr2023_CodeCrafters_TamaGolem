@@ -13,15 +13,13 @@ public class TamagolemMain {
             "Psico", "Ghiaccio", "Veleno", "Drago", "Buio" };
 
     public static void main(String[] args) {
-        int numElementi;
-        int numPietre;
         boolean nuovaPartita;
         Scanner scanner = new Scanner(System.in);
 
         do {
 
-            numElementi = generaNumeroElementi();
-            numPietre = generaNumPietre(numElementi);
+            int numElementi = generaNumeroElementi();
+            int numPietre = generaNumPietre(numElementi);
 
             // Creazione allenatori
             Allenatore allenatoreA = new Allenatore(numElementi, numPietre, MenuTamagolem.inserimentoNomeAllenatore(1));
