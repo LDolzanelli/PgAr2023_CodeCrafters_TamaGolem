@@ -37,8 +37,7 @@ public class Battaglia {
      * @param allenatoreA il primo allenatore creato
      * @param allenatoreB il secondo allenatore creato
      */
-    public void eseguiBattaglia(int numPietre, Allenatore allenatoreA, Allenatore allenatoreB) {
-        Scanner scanner = new Scanner(System.in);
+    public void eseguiBattaglia(int numPietre, Allenatore allenatoreA, Allenatore allenatoreB, Scanner scanner) {
         int danno;
         int turno = 1;
 
@@ -82,7 +81,7 @@ public class Battaglia {
             }
         }
 
-        scanner.close();
+
     }
 
     /**

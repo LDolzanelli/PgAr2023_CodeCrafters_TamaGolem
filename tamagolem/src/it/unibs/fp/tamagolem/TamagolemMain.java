@@ -3,6 +3,7 @@ package it.unibs.fp.tamagolem;
 import it.kibo.fp.lib.InputData;
 
 import java.util.Random;
+import java.util.Scanner;
 
 import static it.unibs.fp.tamagolem.TextConstants.*;
 
@@ -15,6 +16,7 @@ public class TamagolemMain {
         int numElementi;
         int numPietre;
         boolean nuovaPartita;
+        Scanner scanner = new Scanner(System.in);
 
         do {
 
@@ -26,7 +28,7 @@ public class TamagolemMain {
             Allenatore allenatoreB = new Allenatore(numElementi, numPietre, MenuTamagolem.inserimentoNomeAllenatore(2));
 
             Battaglia battaglia = new Battaglia(numElementi, numPietre, allenatoreA, allenatoreB);
-            battaglia.eseguiBattaglia(numPietre, allenatoreA, allenatoreB);
+            battaglia.eseguiBattaglia(numPietre, allenatoreA, allenatoreB, scanner);
             String vincitore = battaglia.getVincitore(allenatoreA, allenatoreB, allenatoreA.getTamagolemADisposizione(),allenatoreB.getTamagolemADisposizione());
 
             MenuTamagolem.mostraVincitore(vincitore);
@@ -36,6 +38,7 @@ public class TamagolemMain {
             nuovaPartita = InputData.readYesOrNo(NUOVA_PARTITA);
         } while (nuovaPartita);
 
+        scanner.close();
     }
 
     public static int generaNumeroElementi() {
