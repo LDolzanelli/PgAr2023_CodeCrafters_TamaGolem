@@ -6,7 +6,7 @@ import java.util.Random;
 public class MatriceDiEquilibrio
 {
 
-    private int range;
+    private final int range;
     final static int NUM_PROVE_MAX = 10;
     int[][] matrice;
     ArrayList<String> elementi;
@@ -21,7 +21,11 @@ public class MatriceDiEquilibrio
         
     }
 
-
+    /**
+     * generazione della matrice di equilibrio con i valori specchiati per ogni elemento disponibile
+     * @param numElementi il numero di elementi selezionati
+     * @return la matrice di equilibrio
+     */
     public int[][] generaMatrice(int numElementi)
     {
         int[][] matrice = new int[numElementi][numElementi];
@@ -106,7 +110,13 @@ public class MatriceDiEquilibrio
     }
 
 
-
+    /**
+     * a seconda dell'indice della pietra lanciata dal primo tamagolem, viene paragonata la sua potenza rispetto
+     * all'elemento della pietra lanciata dal secondo tamagolem
+     * @param elementoA l'elemento lanciato dal primo tamagolem
+     * @param elementoB l'elemento lanciato dal secondo tamagolem
+     * @return la potenza dell'interazione dei due elementi secondo la matrice di equilibrio
+     */
     public int getPotenzaTraDueElementi(String elementoA, String elementoB)
     {
         int indixElemA = 0, indixElemB = 0;

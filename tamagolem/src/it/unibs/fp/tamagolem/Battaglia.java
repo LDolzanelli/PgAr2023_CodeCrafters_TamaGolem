@@ -32,6 +32,12 @@ public class Battaglia {
 
     }
 
+    /**
+     * gestione della battaglia tra i due allenatori
+     * @param numPietre il numero di pietre che ogni tamagolem può avere
+     * @param allenatoreA il primo allenatore creato
+     * @param allenatoreB il secondo allenatore creato
+     */
     public void eseguiBattaglia(int numPietre, Allenatore allenatoreA, Allenatore allenatoreB) {
         Scanner scanner = new Scanner(System.in);
         int danno;
@@ -80,6 +86,14 @@ public class Battaglia {
         scanner.close();
     }
 
+    /**
+     * controllo del vincitore a seconda dei tamagolem rimanenti degli allenatori
+     * @param allenatoreA il primo allenatore creato
+     * @param allenatoreB il secondo allenatore creato
+     * @param tamagolemA il tamagolem del primo allenatore
+     * @param tamagolemB il tamagolem del secondo allenatore
+     * @return il nome dell'allenatore nel caso di vittoria
+     */
     public String getVincitore(Allenatore allenatoreA, Allenatore allenatoreB, Tamagolem tamagolemA, Tamagolem tamagolemB) {
         if (allenatoreA.getNumTamagolem() <= 0 && tamagolemB.getVitaAttuale() > 0) {
             return allenatoreB.getNome();
@@ -219,11 +233,11 @@ public class Battaglia {
     }
 
     /**
-     * a seconda dell'indice generato vengono scelte le pietre desiderate
+     * a seconda dell'indice selezionato vengono scelte le pietre desiderate
      * @param indicePietre la hashmap con gli indici degli elementi nella scorta
      * @param allenatore l'allenatore che sta selezionando le pietre
      * @param tamagolem il tamagolem alla quale si stanno aggiungendo le pietre
-     * @return
+     * @return il nome dell'elemento della pietra scelta dall'utente
      */
     private String sceltaPietra(Map<Integer, String> indicePietre, Allenatore allenatore, Tamagolem tamagolem) {
         visualizzaScortaComune(indicePietre, allenatore, tamagolem);
