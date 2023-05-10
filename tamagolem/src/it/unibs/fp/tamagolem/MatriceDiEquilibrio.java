@@ -82,7 +82,7 @@ public class MatriceDiEquilibrio
             }
 
             //nel caso in cui l'equilibrio si genera in modo automatico forzando l'ultima cifra nella riga a 0 si reginera l'intera riga 
-            if ((matrice[i][numElementi - 1] == 0 && i != numElementi - 1) && i < numElementi - 2) {
+            if (i>=0 &&(matrice[i][numElementi - 1] == 0 && i != numElementi - 1) && i < numElementi - 2) {
                 i--;
             }
 
