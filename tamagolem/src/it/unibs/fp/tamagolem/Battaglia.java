@@ -49,21 +49,26 @@ public class Battaglia {
         Tamagolem tamagolemA = evocaTamagolem(allenatoreA);
         Tamagolem tamagolemB;
 
+        //per evitare che i due allenatori scelgono le stesse pietre con lostesso ordine
         do {
             tamagolemB = evocaTamagolem(allenatoreB);
         } while(checkStessePietre(tamagolemB, tamagolemA, scanner));
 
+    
         while ((allenatoreA.getNumTamagolem() > 0 && allenatoreB.getNumTamagolem() > 0)
                 || (allenatoreA.getNumTamagolem() == 0 && tamagolemA.getVitaAttuale() > 0 && !(allenatoreB.getNumTamagolem() == 0 && tamagolemB.getVitaAttuale() <= 0))
                 || (allenatoreB.getNumTamagolem() == 0 && tamagolemB.getVitaAttuale() > 0) && !(allenatoreA.getNumTamagolem() == 0 && tamagolemA.getVitaAttuale() <= 0)) {
 
+
             if (tamagolemA.getVitaAttuale() <= 0) {
+                //per evitare che i due allenatori scelgono le stesse pietre con lo stesso ordine
                 do {
                     tamagolemA = evocaTamagolem(allenatoreA);
                 } while(checkStessePietre(tamagolemA, tamagolemB, scanner));
             }
 
             if (tamagolemB.getVitaAttuale() <= 0) {
+                //per evitare che i due allenatori scelgono le stesse pietre con lo stesso ordine
                 do {
                     tamagolemB = evocaTamagolem(allenatoreB);
                 } while(checkStessePietre(tamagolemB, tamagolemA, scanner));
@@ -72,10 +77,10 @@ public class Battaglia {
             while (tamagolemA.getVitaAttuale() > 0 && tamagolemB.getVitaAttuale() > 0) {
 
                 danno = matriceDiEquilibrio.getPotenzaTraDueElementi(tamagolemA.getPietra(), tamagolemB.getPietra());
-
+                
+                // mostra dettagli lotta
                 do {
-                    // mostra dettagli lotta
-                    MenuTamagolem.mostraDettagliBattaglia(allenatoreA, allenatoreB, danno, turno);
+                    InterfacciaUtente.mostraDettagliBattaglia(allenatoreA, allenatoreB, danno, turno);
                 } while (!scanner.nextLine().isEmpty());
 
                 tamagolemA.pietraSuccessiva();

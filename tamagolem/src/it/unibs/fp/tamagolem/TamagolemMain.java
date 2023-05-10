@@ -13,7 +13,7 @@ public class TamagolemMain {
             "Psico", "Ghiaccio", "Veleno", "Drago", "Buio" };
 
     public static void main(String[] args) {
-        
+
         boolean nuovaPartita;
         Scanner scanner = new Scanner(System.in);
 
@@ -23,13 +23,13 @@ public class TamagolemMain {
             int numPietre = generaNumPietre(numElementi);
 
             // Creazione allenatori
-            Allenatore allenatoreA = new Allenatore(numElementi, numPietre, MenuTamagolem.inserimentoNomeAllenatore(1));
-            Allenatore allenatoreB = new Allenatore(numElementi, numPietre, MenuTamagolem.inserimentoNomeAllenatore(2));
+            Allenatore allenatoreA = new Allenatore(numElementi, numPietre, InterfacciaUtente.inserimentoNomeAllenatore(1));
+            Allenatore allenatoreB = new Allenatore(numElementi, numPietre, InterfacciaUtente.inserimentoNomeAllenatore(2));
 
             //battaglia
             Battaglia battaglia = new Battaglia(numElementi, numPietre, allenatoreA, allenatoreB);
             battaglia.eseguiBattaglia(scanner);
-            MenuTamagolem.mostraVincitore(battaglia.getVincitore());
+            InterfacciaUtente.mostraVincitore(battaglia.getVincitore());
             battaglia.visualizzaEquilibrio();
 
             nuovaPartita = InputData.readYesOrNo(NUOVA_PARTITA);
@@ -43,7 +43,7 @@ public class TamagolemMain {
      */
     public static int generaNumeroElementi() {
 
-        int difficoltaSelezionata = MenuTamagolem.menuSceltaDifficolta();
+        int difficoltaSelezionata = InterfacciaUtente.menuSceltaDifficolta();
         int numeroElementi = 0;
         // L'elemento in input è un numero tra 1 e 3, forzato dalla scelta del menu
         switch (difficoltaSelezionata) {
