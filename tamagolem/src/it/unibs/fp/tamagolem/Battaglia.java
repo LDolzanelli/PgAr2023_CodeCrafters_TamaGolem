@@ -8,14 +8,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-
 import static it.unibs.fp.tamagolem.TextConstants.*;
 
 public class Battaglia {
 
     private Map<String, Integer> scortaComunePietre = new HashMap<>();
     private ArrayList<String> elementiADisposizione = new ArrayList<>();
-    private int numPietrePerGolem;
+    private final int numPietrePerGolem;
+
     Allenatore allenatoreA;
     Allenatore allenatoreB;
 
@@ -23,7 +23,7 @@ public class Battaglia {
 
     public Battaglia(int numElementi, int numPietre, Allenatore allenatoreA, Allenatore allenatoreB) {
 
-        numPietrePerGolem = numElementi;
+        numPietrePerGolem = numPietre;
         this.allenatoreA = allenatoreA;
         this.allenatoreB = allenatoreB;
 
@@ -35,25 +35,23 @@ public class Battaglia {
 
 
         // Generazione della scorta di pietre comune tramite HashMap
-        aggiuntaPietreScorta(allenatoreA.getNumTamagolem(), numPietrePerGolem);
+        aggiuntaPietreScorta(allenatoreA.getNumTamagolem());
 
     }
 
     /**
      * gestione della battaglia tra i due allenatori
-     * @param numPietre il numero di pietre che ogni tamagolem può avere
-     * @param allenatoreA il primo allenatore creato
-     * @param allenatoreB il secondo allenatore creato
+     * @param scanner per proseguire premendo invio
      */
     public void eseguiBattaglia(Scanner scanner) {
         int danno;
         int turno = 1;
-        Tamagolem tamagolemA = evocaTamagolem(allenatoreA, numPietrePerGolem);
+        Tamagolem tamagolemA = evocaTamagolem(allenatoreA);
         Tamagolem tamagolemB;
 
         do {
-            tamagolemB = evocaTamagolem(allenatoreB, numPietrePerGolem);
-        } while(checkStessePietre(tamagolemB, tamagolemA, numPietrePerGolem));
+            tamagolemB = evocaTamagolem(allenatoreB);
+        } while(checkStessePietre(tamagolemB, tamagolemA, scanner));
 
         while ((allenatoreA.getNumTamagolem() > 0 && allenatoreB.getNumTamagolem() > 0)
                 || (allenatoreA.getNumTamagolem() == 0 && tamagolemA.getVitaAttuale() > 0 && !(allenatoreB.getNumTamagolem() == 0 && tamagolemB.getVitaAttuale() <= 0))
@@ -61,14 +59,14 @@ public class Battaglia {
 
             if (tamagolemA.getVitaAttuale() <= 0) {
                 do {
-                    tamagolemA = evocaTamagolem(allenatoreA, numPietrePerGolem);
-                } while(checkStessePietre(tamagolemA, tamagolemB, numPietrePerGolem));
+                    tamagolemA = evocaTamagolem(allenatoreA);
+                } while(checkStessePietre(tamagolemA, tamagolemB, scanner));
             }
 
             if (tamagolemB.getVitaAttuale() <= 0) {
                 do {
-                    tamagolemB = evocaTamagolem(allenatoreB, numPietrePerGolem);
-                } while(checkStessePietre(tamagolemB, tamagolemA, numPietrePerGolem));
+                    tamagolemB = evocaTamagolem(allenatoreB);
+                } while(checkStessePietre(tamagolemB, tamagolemA, scanner));
             }
 
             while (tamagolemA.getVitaAttuale() > 0 && tamagolemB.getVitaAttuale() > 0) {
@@ -93,8 +91,6 @@ public class Battaglia {
 
     /**
      * controllo del vincitore a seconda dei tamagolem rimanenti degli allenatori
-     * @param allenatoreA il primo allenatore creato
-     * @param allenatoreB il secondo allenatore creato
      * @return il nome dell'allenatore nel caso di vittoria
      */
     public String getVincitore() {
@@ -115,17 +111,17 @@ public class Battaglia {
      * possono coincidere all'infinito se selezionati nello stesso ordine
      * @param tamagolemDaEvocare il tamagolem nel quale vengono caricate le pietre
      * @param tamagolemEvocato il tamagolem già presente in campo
-     * @param numPietre il numero di pietre che i tamagolem possono tenere
+     * @param scanner per aiutare la visualizzazione del messaggio di errore
      * @return true se i tamagolem hanno lo stesso ordine di pietre, false altrimenti
      */
-    private boolean checkStessePietre(Tamagolem tamagolemDaEvocare, Tamagolem tamagolemEvocato, int numPietre) {
+    private boolean checkStessePietre(Tamagolem tamagolemDaEvocare, Tamagolem tamagolemEvocato, Scanner scanner) {
         //Viene creato un secondo indice per il tamagolem già evocato, per tener conto della pietra che lancerà
         //all'inizio del turno
         int indiceTamagolemEvocato = tamagolemEvocato.getPietraDaLanciare();
 
-        for(int i = 0; i < numPietre; i++) {
+        for(int i = 0; i < numPietrePerGolem; i++) {
             //Se l'indice del tamagolem evocato va in overflow, viene resettato a 0
-            if(indiceTamagolemEvocato > numPietre - 1) {
+            if(indiceTamagolemEvocato > numPietrePerGolem - 1) {
                 indiceTamagolemEvocato = 0;
             }
             //Vengono paragonate tutte le pietre in ordine, alla prima eccezione il gioco può continuare
@@ -140,6 +136,10 @@ public class Battaglia {
         System.out.println();
         System.out.println(ATTENZIONE_PAREGGIO);
         System.out.println(INSERIRE_NUOVAMENTE_PIETRE);
+        do {
+            //visualizzazione messaggio di errore
+            System.out.println(INVIO_PER_CONTINUARE);
+        } while (!scanner.nextLine().isEmpty());
         return true;
     }
 
@@ -159,11 +159,10 @@ public class Battaglia {
     /**
      * ad ogni allenatore viene assegnato un tamagolem all'inizio della partita o nel caso uno venga sconfitto
      * @param allenatore l'allenatore alla quale viene associato il tamagolem
-     * @param numPietre il numero di pietre che il tamagolem può tenere
      * @return istanza di tamagolem
      */
-    private Tamagolem evocaTamagolem(Allenatore allenatore, int numPietre) {
-        Tamagolem tamagolem = new Tamagolem(numPietre);
+    private Tamagolem evocaTamagolem(Allenatore allenatore) {
+        Tamagolem tamagolem = new Tamagolem(numPietrePerGolem);
 
         Map<Integer, String> indicePietre = generaIndiceScorta();
 
@@ -182,12 +181,11 @@ public class Battaglia {
     /**
      * a seconda degli elementi a disposizione viene calcolata e riempita la scorta comune
      * @param numTamagolem il numero di tamagolem che ogni allenatore ha a disposizione
-     * @param numPietre il numero di pietre che ogni tamagolem ha a disposizione
      */
-    private void aggiuntaPietreScorta(int numTamagolem, int numPietre) {
+    private void aggiuntaPietreScorta(int numTamagolem) {
         // la formula è leggermente diversa perchè in certi casi la scorta comune non bastava
         // per i tamagolem di ogni allenatore
-        int numPietrePerElemento = ((3 * numTamagolem * numPietre) / elementiADisposizione.size());
+        int numPietrePerElemento = ((3 * numTamagolem * numPietrePerGolem) / elementiADisposizione.size());
         for (String s : elementiADisposizione) {
             // Le pietre vengono messe nell'hashmap insieme al numero iniziale
             scortaComunePietre.put(s, numPietrePerElemento);
