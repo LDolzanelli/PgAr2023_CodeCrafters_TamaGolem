@@ -37,6 +37,7 @@ public class MatriceDiEquilibrio
             int numProve = 0;
             riprova = false;
 
+
             for (int j = 0; j < i; j++) {
                 somma += matrice[i][j];
             }
@@ -50,6 +51,8 @@ public class MatriceDiEquilibrio
                             somma += matrice[i][j];
                             numProve++;
 
+                            //ogni volta che viene generato un numero casuale si controlla che la somma dei numeri precedenti non sia maggiore del range
+                            //se è maggiore si prova di reginerare il numero casuale per massimo n volte e se non si riesce si reginera la riga precedente
                             if (Math.abs(somma) > range) {
                                 somma -= matrice[i][j];
                                 riprova = true;
@@ -78,11 +81,12 @@ public class MatriceDiEquilibrio
                 }
             }
 
+            //nel caso in cui l'equilibrio si genera in modo automatico forzando l'ultima cifra nella riga a 0 si reginera l'intera riga 
             if ((matrice[i][numElementi - 1] == 0 && i != numElementi - 1) && i < numElementi - 2) {
                 i--;
-
             }
 
+            //in casi particolari si reginera l'intera matrice da 0
             if (i >= numElementi - 2 && ((matrice[i][numElementi - 1] == 0 && i != numElementi - 1) || Math.abs(matrice[i][numElementi - 2]) >= range + range / 2)) {
                 i = 0;
             }

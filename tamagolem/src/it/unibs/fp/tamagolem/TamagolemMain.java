@@ -25,12 +25,11 @@ public class TamagolemMain {
             Allenatore allenatoreA = new Allenatore(numElementi, numPietre, MenuTamagolem.inserimentoNomeAllenatore(1));
             Allenatore allenatoreB = new Allenatore(numElementi, numPietre, MenuTamagolem.inserimentoNomeAllenatore(2));
 
+            //battaglia
             Battaglia battaglia = new Battaglia(numElementi, numPietre, allenatoreA, allenatoreB);
             battaglia.eseguiBattaglia(numPietre, allenatoreA, allenatoreB, scanner);
-            String vincitore = battaglia.getVincitore(allenatoreA, allenatoreB, allenatoreA.getTamagolemADisposizione(),allenatoreB.getTamagolemADisposizione());
-
+            String vincitore = battaglia.getVincitore(allenatoreA, allenatoreB);
             MenuTamagolem.mostraVincitore(vincitore);
-
             battaglia.visualizzaEquilibrio();
 
             nuovaPartita = InputData.readYesOrNo(NUOVA_PARTITA);
@@ -39,6 +38,9 @@ public class TamagolemMain {
         scanner.close();
     }
 
+    /**
+     * genera un numero degli elementi in base alla difficoltà
+     */
     public static int generaNumeroElementi() {
 
         int difficoltaSelezionata = MenuTamagolem.menuSceltaDifficolta();

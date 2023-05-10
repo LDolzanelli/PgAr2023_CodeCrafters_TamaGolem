@@ -70,7 +70,7 @@ public class Battaglia {
 
                 do {
                     // mostra dettagli lotta
-                    MenuTamagolem.mostraDettagliBattaglia(allenatoreA, allenatoreB, danno, turno, tamagolemA, tamagolemB);
+                    MenuTamagolem.mostraDettagliBattaglia(allenatoreA, allenatoreB, danno, turno);
                 } while (!scanner.nextLine().isEmpty());
 
                 tamagolemA.pietraSuccessiva();
@@ -88,18 +88,17 @@ public class Battaglia {
      * controllo del vincitore a seconda dei tamagolem rimanenti degli allenatori
      * @param allenatoreA il primo allenatore creato
      * @param allenatoreB il secondo allenatore creato
-     * @param tamagolemA il tamagolem del primo allenatore
-     * @param tamagolemB il tamagolem del secondo allenatore
      * @return il nome dell'allenatore nel caso di vittoria
      */
-    public String getVincitore(Allenatore allenatoreA, Allenatore allenatoreB, Tamagolem tamagolemA, Tamagolem tamagolemB) {
+    public String getVincitore(Allenatore allenatoreA, Allenatore allenatoreB) {
+
+        Tamagolem tamagolemA = allenatoreA.getTamagolemADisposizione();
+        Tamagolem tamagolemB = allenatoreB.getTamagolemADisposizione();
         if (allenatoreA.getNumTamagolem() <= 0 && tamagolemB.getVitaAttuale() > 0) {
             return allenatoreB.getNome();
 
         } else if (allenatoreB.getNumTamagolem() <= 0 && tamagolemA.getVitaAttuale() > 0) {
             return allenatoreA.getNome();
-            //System.out.println(FLUSH);
-            //System.out.println(PrettyStrings.frame(VINTO + allenatoreA.getNome().toUpperCase(), 80, true, true));
         }else return null;
 
     }
