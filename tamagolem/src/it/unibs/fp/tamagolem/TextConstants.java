@@ -1,6 +1,7 @@
 package it.unibs.fp.tamagolem;
 
 public class TextConstants {
+
     public static final String FLUSH = "\033[H\033[2J";
     public static final String VINTO = "HA VINTO L'";
     public static final String VITA_TAMAGOLEM_DELL = "Vita Tamagolem dell' ";
@@ -30,5 +31,6 @@ public class TextConstants {
     public static final String PIETRE_SCORTA = "   Pietre: ";
     public static final String MESSAGGIO_EQUILIBRIO = "EQUILIBRIO DEL MONDO";
     public static final String FORMAT_EQUILIBRIO = "%10s";
-    public static final String NUOVA_PARTITA = "Vuoi giocare una nuova partita";    public static final String ALLENATORE = "Allenatore ";
+    public static final String NUOVA_PARTITA = "Vuoi giocare una nuova partita";    
+    public static final String ALLENATORE = "Allenatore ";
 }

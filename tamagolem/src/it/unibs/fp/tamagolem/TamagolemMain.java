@@ -13,6 +13,7 @@ public class TamagolemMain {
             "Psico", "Ghiaccio", "Veleno", "Drago", "Buio" };
 
     public static void main(String[] args) {
+        
         boolean nuovaPartita;
         Scanner scanner = new Scanner(System.in);
 
@@ -27,9 +28,8 @@ public class TamagolemMain {
 
             //battaglia
             Battaglia battaglia = new Battaglia(numElementi, numPietre, allenatoreA, allenatoreB);
-            battaglia.eseguiBattaglia(numPietre, allenatoreA, allenatoreB, scanner);
-            String vincitore = battaglia.getVincitore(allenatoreA, allenatoreB);
-            MenuTamagolem.mostraVincitore(vincitore);
+            battaglia.eseguiBattaglia(scanner);
+            MenuTamagolem.mostraVincitore(battaglia.getVincitore());
             battaglia.visualizzaEquilibrio();
 
             nuovaPartita = InputData.readYesOrNo(NUOVA_PARTITA);

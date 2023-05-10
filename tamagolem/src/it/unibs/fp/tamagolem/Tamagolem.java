@@ -29,9 +29,10 @@ public class Tamagolem {
     }
 
     /**
-     * metodo che tiene traccia di quale pietra è stata lanciata per ultima da un tamagolem, nel caso rimanga
-     * in vita dopo una lotta
+     * 
+     * metodo che fa ciclare le pietre selezionate ogni volta che viene chiamato
      */
+
     public void pietraSuccessiva() {
 
         //nel caso di overflow viene resettato a 0

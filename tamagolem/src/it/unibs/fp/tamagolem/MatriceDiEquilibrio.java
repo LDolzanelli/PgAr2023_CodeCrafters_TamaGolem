@@ -6,7 +6,7 @@ import java.util.Random;
 public class MatriceDiEquilibrio
 {
 
-    private final int range;
+    private final int RANGE;
     final static int NUM_PROVE_MAX = 10;
     private final int[][] matrice;
     ArrayList<String> elementi;
@@ -16,7 +16,7 @@ public class MatriceDiEquilibrio
     public MatriceDiEquilibrio(ArrayList<String> elementi, int potenzaMassima)
     {
         this.elementi = elementi;
-        this.range = potenzaMassima;
+        this.RANGE = potenzaMassima;
         matrice = generaMatrice(elementi.size());
         
     }
@@ -47,13 +47,13 @@ public class MatriceDiEquilibrio
                     if (j != numElementi - 1) {
 
                         do {
-                            matrice[i][j] = generaCasualeSenzaZero(range);
+                            matrice[i][j] = generaCasualeSenzaZero(RANGE);
                             somma += matrice[i][j];
                             numProve++;
 
-                            //ogni volta che viene generato un numero casuale si controlla che la somma dei numeri precedenti non sia maggiore del range
+                            //ogni volta che viene generato un numero casuale si controlla che la somma dei numeri precedenti non sia maggiore del RANGE
                             //se è maggiore si prova di reginerare il numero casuale per massimo n volte e se non si riesce si reginera la riga precedente
-                            if (Math.abs(somma) > range) {
+                            if (Math.abs(somma) > RANGE) {
                                 somma -= matrice[i][j];
                                 riprova = true;
                             } else {
@@ -87,7 +87,7 @@ public class MatriceDiEquilibrio
             }
 
             //in casi particolari si reginera l'intera matrice da 0
-            if (i >= numElementi - 2 && ((matrice[i][numElementi - 1] == 0 && i != numElementi - 1) || Math.abs(matrice[i][numElementi - 2]) >= range + range / 2)) {
+            if (i >= numElementi - 2 && ((matrice[i][numElementi - 1] == 0 && i != numElementi - 1) || Math.abs(matrice[i][numElementi - 2]) >= RANGE + RANGE / 2)) {
                 i = 0;
             }
         }
@@ -98,16 +98,16 @@ public class MatriceDiEquilibrio
     }
 
     /**
-     * genera un numero casuale in un range fornito, escludendo lo zero (ogni elemento deve avere interazione)
-     * @param range il range predeterminato
+     * genera un numero casuale in un RANGE fornito, escludendo lo zero (ogni elemento deve avere interazione)
+     * @param RANGE il RANGE predeterminato
      * @return il numero casuale
      */
-    public int generaCasualeSenzaZero(int range) {
+    public int generaCasualeSenzaZero(int RANGE) {
         Random rand = new Random();
         int casuale;
 
         do {
-            casuale = rand.nextInt(range * 2 + 1) - range;
+            casuale = rand.nextInt(RANGE * 2 + 1) - RANGE;
         } while (casuale == 0);
 
         return casuale;

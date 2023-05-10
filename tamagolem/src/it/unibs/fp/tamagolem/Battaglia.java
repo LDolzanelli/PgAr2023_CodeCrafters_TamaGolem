@@ -15,10 +15,17 @@ public class Battaglia {
 
     private Map<String, Integer> scortaComunePietre = new HashMap<>();
     private ArrayList<String> elementiADisposizione = new ArrayList<>();
+    private int numPietrePerGolem;
+    Allenatore allenatoreA;
+    Allenatore allenatoreB;
 
     MatriceDiEquilibrio matriceDiEquilibrio;
 
     public Battaglia(int numElementi, int numPietre, Allenatore allenatoreA, Allenatore allenatoreB) {
+
+        numPietrePerGolem = numElementi;
+        this.allenatoreA = allenatoreA;
+        this.allenatoreB = allenatoreB;
 
         for (int i = 0; i < numElementi; i++) {
             elementiADisposizione.add(TamagolemMain.NOME_ELEMENTI[i]);
@@ -26,8 +33,9 @@ public class Battaglia {
         // Viene generata la matrice che mette in equilibrio gli elementi selezionati
         matriceDiEquilibrio = new MatriceDiEquilibrio(elementiADisposizione, numElementi);
 
+
         // Generazione della scorta di pietre comune tramite HashMap
-        aggiuntaPietreScorta(allenatoreA.getNumTamagolem(), numPietre);
+        aggiuntaPietreScorta(allenatoreA.getNumTamagolem(), numPietrePerGolem);
 
     }
 
@@ -37,16 +45,15 @@ public class Battaglia {
      * @param allenatoreA il primo allenatore creato
      * @param allenatoreB il secondo allenatore creato
      */
-    public void eseguiBattaglia(int numPietre, Allenatore allenatoreA, Allenatore allenatoreB, Scanner scanner) {
+    public void eseguiBattaglia(Scanner scanner) {
         int danno;
         int turno = 1;
-
-        Tamagolem tamagolemA = evocaTamagolem(allenatoreA, numPietre);
+        Tamagolem tamagolemA = evocaTamagolem(allenatoreA, numPietrePerGolem);
         Tamagolem tamagolemB;
 
         do {
-            tamagolemB = evocaTamagolem(allenatoreB, numPietre);
-        } while(checkStessePietre(tamagolemB, tamagolemA, numPietre));
+            tamagolemB = evocaTamagolem(allenatoreB, numPietrePerGolem);
+        } while(checkStessePietre(tamagolemB, tamagolemA, numPietrePerGolem));
 
         while ((allenatoreA.getNumTamagolem() > 0 && allenatoreB.getNumTamagolem() > 0)
                 || (allenatoreA.getNumTamagolem() == 0 && tamagolemA.getVitaAttuale() > 0 && !(allenatoreB.getNumTamagolem() == 0 && tamagolemB.getVitaAttuale() <= 0))
@@ -54,14 +61,14 @@ public class Battaglia {
 
             if (tamagolemA.getVitaAttuale() <= 0) {
                 do {
-                    tamagolemA = evocaTamagolem(allenatoreA, numPietre);
-                } while(checkStessePietre(tamagolemA, tamagolemB, numPietre));
+                    tamagolemA = evocaTamagolem(allenatoreA, numPietrePerGolem);
+                } while(checkStessePietre(tamagolemA, tamagolemB, numPietrePerGolem));
             }
 
             if (tamagolemB.getVitaAttuale() <= 0) {
                 do {
-                    tamagolemB = evocaTamagolem(allenatoreB, numPietre);
-                } while(checkStessePietre(tamagolemB, tamagolemA, numPietre));
+                    tamagolemB = evocaTamagolem(allenatoreB, numPietrePerGolem);
+                } while(checkStessePietre(tamagolemB, tamagolemA, numPietrePerGolem));
             }
 
             while (tamagolemA.getVitaAttuale() > 0 && tamagolemB.getVitaAttuale() > 0) {
@@ -90,7 +97,7 @@ public class Battaglia {
      * @param allenatoreB il secondo allenatore creato
      * @return il nome dell'allenatore nel caso di vittoria
      */
-    public String getVincitore(Allenatore allenatoreA, Allenatore allenatoreB) {
+    public String getVincitore() {
 
         Tamagolem tamagolemA = allenatoreA.getTamagolemADisposizione();
         Tamagolem tamagolemB = allenatoreB.getTamagolemADisposizione();
@@ -112,12 +119,11 @@ public class Battaglia {
      * @return true se i tamagolem hanno lo stesso ordine di pietre, false altrimenti
      */
     private boolean checkStessePietre(Tamagolem tamagolemDaEvocare, Tamagolem tamagolemEvocato, int numPietre) {
-        int i;
         //Viene creato un secondo indice per il tamagolem già evocato, per tener conto della pietra che lancerà
         //all'inizio del turno
         int indiceTamagolemEvocato = tamagolemEvocato.getPietraDaLanciare();
 
-        for(i = 0; i < numPietre; i++) {
+        for(int i = 0; i < numPietre; i++) {
             //Se l'indice del tamagolem evocato va in overflow, viene resettato a 0
             if(indiceTamagolemEvocato > numPietre - 1) {
                 indiceTamagolemEvocato = 0;
