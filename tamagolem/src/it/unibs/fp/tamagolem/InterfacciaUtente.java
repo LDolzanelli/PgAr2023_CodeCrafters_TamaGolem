@@ -6,7 +6,7 @@ import it.kibo.fp.lib.PrettyStrings;
 
 import static it.unibs.fp.tamagolem.TextConstants.*;
 
-public class MenuTamagolem {
+public class InterfacciaUtente {
 
     /**
      * menu per la scelta della difficoltà, utilizzato per generare il numero di
